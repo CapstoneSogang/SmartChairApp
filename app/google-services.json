@@ -1,0 +1,81 @@
+{
+  "project_info": {
+    "project_number": "1067402327063",
+    "firebase_url": "https://hashmusic-1225.firebaseio.com",
+    "project_id": "hashmusic-1225",
+    "storage_bucket": "hashmusic-1225.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067402327063:android:441cdbf581b645ed",
+        "android_client_info": {
+          "package_name": "donggukapps.hashmusics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067402327063-th77ls9ac4dtt33hlmsjcresalkp2tv5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1067402327063-061gh40hlp8s4403busv5ru4i3lfg09t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKCJwYbKgGS9WOVIoMKG3y_mwUqilaEls"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067402327063:android:c70fbaded6984f34",
+        "android_client_info": {
+          "package_name": "mountainq.kinggod.capstone.sogang.smartchairapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067402327063-th77ls9ac4dtt33hlmsjcresalkp2tv5.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1067402327063-061gh40hlp8s4403busv5ru4i3lfg09t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKCJwYbKgGS9WOVIoMKG3y_mwUqilaEls"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
