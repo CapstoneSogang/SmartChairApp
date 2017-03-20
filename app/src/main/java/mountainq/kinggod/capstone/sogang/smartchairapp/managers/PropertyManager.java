@@ -28,18 +28,19 @@ public class PropertyManager {
         mEditor.apply();
     }
 
-    private static final String USER_IDX = "user_authentication";
-    public int getUserIdx(){
-        return mPrefs.getInt(USER_IDX, -1);
+    private static final String USER_TOKEN = "user_authentication";
+    public String getUserToken(){
+        return mPrefs.getString(USER_TOKEN, "default");
     }
-    public void setUserIdx(int userIdx){
-        mEditor.putInt(USER_IDX,userIdx);
+    public void setUserToken(int userIdx){
+        mEditor.putInt(USER_TOKEN,userIdx);
         mEditor.commit();
     }
 
+
     private static final String PUSH_TOKEN = "push_token";
     public String getPushToken() {
-        return mPrefs.getString(PUSH_TOKEN, "");
+        return mPrefs.getString(PUSH_TOKEN, "default");
     }
     public void setPushToken(String token){
         mEditor.putString(PUSH_TOKEN, token);
