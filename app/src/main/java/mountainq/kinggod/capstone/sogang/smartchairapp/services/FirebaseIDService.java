@@ -8,6 +8,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import java.io.IOException;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.ApplicationController;
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.PropertyManager;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -21,17 +22,15 @@ public class FirebaseIDService extends FirebaseInstanceIdService {
 
     static final String TAG = "MyFirebaseIDService";
     ApplicationController app;
+    PropertyManager propertyManager = PropertyManager.getInstance();
 
     @Override
     public void onTokenRefresh() {
         Log.d("test", "tokenrefresh");
-        //Get updated InstanceID Token.
-        // only First time can get token another you can't see token,
-        // If you didn't see your token, i recommend delete and reinstall your app
-
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token : " + refreshedToken);
         app = (ApplicationController) getApplicationContext();
+        propertyManager.setPushToken(refreshedToken);
 //        app.setToken(refreshedToken);
 
         //TODO: Implement this method to send any registration to your app's servers

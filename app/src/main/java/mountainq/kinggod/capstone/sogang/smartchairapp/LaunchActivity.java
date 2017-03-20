@@ -24,8 +24,10 @@ public class LaunchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_launch);
 //        만약에 lgotin Token이 없으면 Register로 넘어간다.
         LaunchTask task = new LaunchTask();
+
         if(checkToken())
             task.execute(SECOND_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
         else
@@ -34,7 +36,7 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     private boolean checkToken() {
-        return manager.getUserToken().equals("default");
+        return manager.getPushToken().equals("default") && manager.getUserToken().equals("default");
     }
 
     private class LaunchTask extends AsyncTask<Integer, Integer, Void> {

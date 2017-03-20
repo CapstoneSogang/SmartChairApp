@@ -7,6 +7,7 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.ApplicationController;
 
 /**
  * Created by dnay2 on 2017-03-19.
+ *  Here is the manager for using SharedPreferences
  */
 
 public class PropertyManager {
@@ -32,8 +33,8 @@ public class PropertyManager {
     public String getUserToken(){
         return mPrefs.getString(USER_TOKEN, "default");
     }
-    public void setUserToken(int userIdx){
-        mEditor.putInt(USER_TOKEN,userIdx);
+    public void setUserToken(String userToken){
+        mEditor.putString(USER_TOKEN,userToken);
         mEditor.commit();
     }
 
