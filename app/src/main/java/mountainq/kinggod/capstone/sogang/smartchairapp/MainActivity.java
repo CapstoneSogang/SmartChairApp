@@ -19,11 +19,19 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.Graph;
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.ReceiveData;
+import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HTTPInterface;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +50,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("???","zzzz");
+        ReceiveData receiveData = new ReceiveData();
+        receiveData.getData();
+
+
 
         // mDbOpenHelper = new DbOpenHelper(this);
         Log.d("insert", "zzz");
@@ -67,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         mDbOpenHelper.open();
 
         //정자세 -> 걸쳐앉음 -> 정자세 -> 거북목 -> 정자세
-      //  mDbOpenHelper.deleteAll(); //나중에 삭제할 부분. 디버깅용
+        mDbOpenHelper.deleteAll(); //나중에 삭제할 부분. 디버깅용
 
         mDbOpenHelper.insertColumn("0319","1400","3" , "5");
         mDbOpenHelper.insertColumn("0319","1401","0" , "5");
