@@ -51,17 +51,24 @@ public class LaunchActivity extends AppCompatActivity {
             long preTime = System.currentTimeMillis();
             runTime = params[1];
             staticInterval = interval = params[2];
+            int value = 0;
 
             while (interval < runTime) {
                 if(preTime - System.currentTimeMillis() > staticInterval){
                     interval += interval;
                     //애니메이션 같은거 여기다 두면댐
-                    publishProgress(DEFAULT_INTERVAL);
+                    publishProgress(++value);
                 }
 
             }
             startActivity(intent);
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+
         }
 
         private Intent getNext(int code){

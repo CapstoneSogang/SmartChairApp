@@ -5,11 +5,16 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueManager;
+
 /**
  * Created by dnay2 on 2017-03-19.
  */
 
 public class ChairService extends FirebaseMessagingService {
+
+    HueManager hueManager = HueManager.getInstance();
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         showNotification(remoteMessage.getData());

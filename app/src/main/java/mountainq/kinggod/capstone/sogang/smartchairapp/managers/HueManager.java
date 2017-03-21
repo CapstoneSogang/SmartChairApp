@@ -33,7 +33,6 @@ public class HueManager {
     public HueManager() {
         phHueSDK = PHHueSDK.getInstance();
         phHueSDK.getNotificationManager().registerSDKListener(hueListener);
-        accessPoint = new PHAccessPoint();
     }
 
     /**
@@ -64,7 +63,7 @@ public class HueManager {
         sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
         sm.search(true, true);
 
-        if(accessPoints != null){
+        if(accessPoints != null && accessPoints.size() > 0){
             return accessPoints;
         }
 
@@ -88,6 +87,7 @@ public class HueManager {
         //        브릿지와 연결되었을 때 사용할 코드를 여따 만들면 된다는군
         @Override
         public void onBridgeConnected(PHBridge phBridge, String s) {
+            //브릿지 찾기
             phHueSDK.setSelectedBridge(phBridge);
             phHueSDK.enableHeartbeat(phBridge, PHHueSDK.HB_INTERVAL);
         }
