@@ -48,6 +48,24 @@ public class PropertyManager {
         mEditor.commit();
     }
 
+    private static final String _IP_ADDRESS = "ip_address";
+    public String getIpAddress() {
+        return mPrefs.getString(_IP_ADDRESS, "default");
+    }
+    public void setIpAddress(String ipAddress){
+        mEditor.putString(_IP_ADDRESS, ipAddress);
+        mEditor.commit();
+    }
+
+    private static final String _PORT_NUMBER = "port_number";
+    public int getPortNumber() {
+        return mPrefs.getInt(_PORT_NUMBER, -1);
+    }
+    public void setPortNumber(int portNumber){
+        mEditor.putInt(_PORT_NUMBER, portNumber);
+        mEditor.commit();
+    }
+
     public void clear(){
         mEditor.clear();
         mEditor.commit();

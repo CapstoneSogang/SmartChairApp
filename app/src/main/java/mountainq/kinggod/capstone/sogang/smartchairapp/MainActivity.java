@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-<<<<<<< HEAD
+import com.github.mikephil.charting.charts.LineChart;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -16,37 +16,11 @@ import com.philips.lighting.model.PHHueParsingError;
 
 import java.util.List;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueManager;
-import mountainq.kinggod.capstone.sogang.smartchairapp.managers.LOG;
-=======
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.Graph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.ReceiveData;
-import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HTTPInterface;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
->>>>>>> 6ebd55c8357d2ff1a06255ee356aafb565caeeea
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueManager;
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.LOG;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -90,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
 
     public void tempFuntion(){
 
@@ -170,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-=======
+
     protected void setDataBase(DbOpenHelper mDbOpenHelper) //디비 설정하기
     {
         mDbOpenHelper.open();
@@ -202,5 +175,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
->>>>>>> 6ebd55c8357d2ff1a06255ee356aafb565caeeea
 }
