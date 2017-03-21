@@ -33,8 +33,13 @@ dependencies {
     compile 'com.google.firebase:firebase-core:9.2.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
+<<<<<<< HEAD
     compile project(':huelocalsdk')
     compile project(':huesdkresources')
+=======
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
+    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+>>>>>>> 6ebd55c8357d2ff1a06255ee356aafb565caeeea
 }
 
 apply plugin: 'com.google.gms.google-services'
