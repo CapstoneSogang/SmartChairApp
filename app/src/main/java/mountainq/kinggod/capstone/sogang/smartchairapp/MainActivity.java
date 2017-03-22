@@ -21,7 +21,7 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.datas.Graph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.ReceiveData;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueManager;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.LOG;
-
+///
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "TestDataBaseActivity";
