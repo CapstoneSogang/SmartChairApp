@@ -1,7 +1,9 @@
 package mountainq.kinggod.capstone.sogang.smartchairapp;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import java.io.IOException;
@@ -77,6 +79,26 @@ public class RegisterActivity extends AppCompatActivity {
         }
         taskManager.disconnection();
         return flag;
+    }
+
+    public AlertDialog makeAlertDialog (String title, String message){
+        return new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .create();
+
     }
 
 
