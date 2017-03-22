@@ -29,9 +29,9 @@ public class LaunchActivity extends AppCompatActivity {
         LaunchTask task = new LaunchTask();
 
         if(checkToken())
-            task.execute(SECOND_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
-        else
             task.execute(FIRST_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
+        else
+            task.execute(SECOND_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
 
     }
 
