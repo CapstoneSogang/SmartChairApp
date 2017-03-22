@@ -15,7 +15,7 @@ public class PropertyManager {
     private static PropertyManager instance;
     public static PropertyManager getInstance() {
         if(instance==null){
-            instance =new PropertyManager();
+            instance = new PropertyManager();
         }
         return instance;
     }
@@ -48,12 +48,12 @@ public class PropertyManager {
         mEditor.commit();
     }
 
-    private static final String _IP_ADDRESS = "ip_address";
-    public String getIpAddress() {
-        return mPrefs.getString(_IP_ADDRESS, "default");
+    private static final String _HUE_IP = "hue_ip";
+    public String getHueIp() {
+        return mPrefs.getString(_HUE_IP, "default");
     }
-    public void setIpAddress(String ipAddress){
-        mEditor.putString(_IP_ADDRESS, ipAddress);
+    public void setHueIp(String ipAddress){
+        mEditor.putString(_HUE_IP, ipAddress);
         mEditor.commit();
     }
 
@@ -63,6 +63,15 @@ public class PropertyManager {
     }
     public void setPortNumber(int portNumber){
         mEditor.putInt(_PORT_NUMBER, portNumber);
+        mEditor.commit();
+    }
+
+    private static final String _HUE_NAME = "hue-name";
+    public String getHueName(){
+        return mPrefs.getString(_HUE_NAME, "default");
+    }
+    public void setHueName(String hueName){
+        mEditor.putString(_HUE_NAME, hueName);
         mEditor.commit();
     }
 

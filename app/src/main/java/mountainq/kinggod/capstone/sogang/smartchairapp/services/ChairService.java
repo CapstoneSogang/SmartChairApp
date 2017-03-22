@@ -11,6 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.philips.lighting.hue.listener.PHHTTPListener;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
 
@@ -27,6 +28,11 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.managers.PropertyManager;
 
 public class ChairService extends FirebaseMessagingService {
 
+    private static final int BLUE = 101;
+    private static final int GREEN = 102;
+    private static final int RED = 103;
+    private static final int WHITE = 104;
+
     PropertyManager propertyManager = PropertyManager.getInstance();
     HueManager hueManager = HueManager.getInstance();
     PHBridgeSearchManager sm;
@@ -36,10 +42,12 @@ public class ChairService extends FirebaseMessagingService {
     public void onCreate() {
         super.onCreate();
         ArrayList<PHAccessPoint> list = hueManager.searchPhHueDevice();
-        if(list.size() > 0) {
+        if (list.size() > 0) {
             showNotification("there are some Hue devices near by here.");
-            for(PHAccessPoint ap : list)
-                propertyManager.setIpAddress(ap.getIpAddress());
+            for (PHAccessPoint ap : list) {
+                propertyManager.setHueIp(ap.getIpAddress());
+            }
+
         }
     }
 
@@ -48,19 +56,17 @@ public class ChairService extends FirebaseMessagingService {
         showNotification(remoteMessage.getData());
     }
 
-    private void showNotification(Map<String, String> data){
+    private void showNotification(Map<String, String> data) {
 
     }
 
-    private void showNotification(String message){
+    private void showNotification(String message) {
         NotificationCompat.Builder builder = buildSimpleNotification("", "", "Hello Hue", message);
         builder.build();
     }
 
-//    의자 움직이는거 만들어야함
 
-
-        private NotificationCompat.Builder buildSimpleNotification(String code, String idx, String title, String message) {
+    private NotificationCompat.Builder buildSimpleNotification(String code, String idx, String title, String message) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
 //                .setSmallIcon(R.drawable.ic_notice_alarm)
@@ -101,4 +107,25 @@ public class ChairService extends FirebaseMessagingService {
                 PendingIntent.FLAG_UPDATE_CURRENT
         );
     }
+
+    public void changHueLight(int code) {
+         String query = "";
+        switch (code) {
+            case BLUE:
+                break;
+            case GREEN:
+                break;
+            case RED:
+                break;
+            case WHITE:
+                break;
+        }
+        hueManager.getPhHueSDK().getSelectedBridge().doHTTPPut("", "", new PHHTTPListener() {
+            @Override
+            public void onHTTPResponse(String s) {
+
+            }
+        });
+    }
+
 }

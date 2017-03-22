@@ -14,4 +14,9 @@ public class ApplicationController extends Application {
         return instance;
     }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ApplicationController.instance = this;
+    }
 }
