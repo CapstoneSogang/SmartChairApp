@@ -8,14 +8,6 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.DrawableWrapper;
-import android.util.Log;
-
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
@@ -25,15 +17,15 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IFillFormatter;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.MPPointF;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -249,7 +241,7 @@ public class Graph {
         chart.invalidate();
 
     }
-/*
+
     public void drawPieGraph(String date)
     {
         pieChart.setUsePercentValues(true);
@@ -297,26 +289,34 @@ public class Graph {
         // the chart.
         for (int i = 0; i < 5 ; i++) {
             //여기서 막혔당 ㅠㅠ
-            entries.add(new PieEntry((float)  5),
-                    "hi",
-                    getResources().getDrawable(R.drawable.star)));
+
+            entries.add(new PieEntry((float)  5));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "Election Results");
 
-        dataSet.setDrawIcons(false);
+        //dataSet.setDrawIcons(false);
 
         dataSet.setSliceSpace(3f);
-        dataSet.setIconsOffset(new MPPointF(0, 40));
+        //dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
 
+        PieData data = new PieData(dataSet);
+        data.setValueFormatter(new PercentFormatter());
+        data.setValueTextSize(11f);
+        data.setValueTextColor(Color.WHITE);
+       // data.setValueTypeface(mTfLight);
+        pieChart.setData(data);
 
+        // undo all highlights
+        pieChart.highlightValues(null);
 
-
-
+        pieChart.invalidate();
     }
 
-*/
+
+
+
 
 
     class AxisTimeFormatter implements IAxisValueFormatter {  //axis format x축 시간화

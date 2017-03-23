@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
 import com.philips.lighting.hue.sdk.PHHueSDK;
@@ -55,12 +56,15 @@ public class MainActivity extends AppCompatActivity {
         LineChart neckChart = (LineChart) findViewById(R.id.neck_chart);
         neckGraph = new Graph(mDbOpenHelper,neckChart);
         neckGraph.drawLineGraph("neck");
-/*
+
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
         pieGraph = new Graph(mDbOpenHelper, pieChart);
 
         pieGraph.drawPieGraph(date);
-*/
+
+
+
+
 
     }
 
