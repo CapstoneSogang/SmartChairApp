@@ -66,12 +66,21 @@ public class PropertyManager {
         mEditor.commit();
     }
 
-    private static final String _HUE_NAME = "hue-name";
+    private static final String _HUE_NAME = "hue_name";
     public String getHueName(){
         return mPrefs.getString(_HUE_NAME, "default");
     }
     public void setHueName(String hueName){
         mEditor.putString(_HUE_NAME, hueName);
+        mEditor.commit();
+    }
+
+    private static final String _HUE_URL = "hue_url";
+    public String getHueUrl(){
+        return mPrefs.getString(_HUE_URL, "default");
+    }
+    public void setHueUrl(String hueUrl){
+        mEditor.putString(_HUE_URL, hueUrl);
         mEditor.commit();
     }
 

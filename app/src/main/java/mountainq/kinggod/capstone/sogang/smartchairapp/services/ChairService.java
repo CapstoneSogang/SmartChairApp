@@ -14,6 +14,7 @@ import com.google.firebase.messaging.RemoteMessage;
 import com.philips.lighting.hue.listener.PHHTTPListener;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
 import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
+import com.philips.lighting.model.PHBridge;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -33,6 +34,8 @@ public class ChairService extends FirebaseMessagingService {
     private static final int RED = 103;
     private static final int WHITE = 104;
 
+    private static final String BASIC_URL = "";
+
     PropertyManager propertyManager = PropertyManager.getInstance();
     HueManager hueManager = HueManager.getInstance();
     PHBridgeSearchManager sm;
@@ -41,19 +44,27 @@ public class ChairService extends FirebaseMessagingService {
     @Override
     public void onCreate() {
         super.onCreate();
+
+    }
+
+    private void setHueDevice(){
         ArrayList<PHAccessPoint> list = hueManager.searchPhHueDevice();
         if (list.size() > 0) {
             showNotification("there are some Hue devices near by here.");
             for (PHAccessPoint ap : list) {
                 propertyManager.setHueIp(ap.getIpAddress());
             }
-
         }
+        PHBridge bridge = hueManager.getPhHueSDK().getSelectedBridge();
+        hueManager.getPhHueSDK().setSelectedBridge(bridge);
     }
+
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         showNotification(remoteMessage.getData());
+        changHueLight(Integer.parseInt(remoteMessage.getData().get("integerKey")));
     }
 
     private void showNotification(Map<String, String> data) {
@@ -109,18 +120,41 @@ public class ChairService extends FirebaseMessagingService {
     }
 
     public void changHueLight(int code) {
-         String query = "";
+        accessPoint.setIpAddress(propertyManager.getHueIp());
+        accessPoint.setUsername(propertyManager.getHueName());
+
+
+         String query = BASIC_URL;
         switch (code) {
-            case BLUE:
+            case BLUE: query = "";
                 break;
-            case GREEN:
+            case GREEN: query = "";
                 break;
-            case RED:
+            case RED: query = "";
                 break;
-            case WHITE:
+            case WHITE: query = "";
                 break;
         }
-        hueManager.getPhHueSDK().getSelectedBridge().doHTTPPut("", "", new PHHTTPListener() {
+
+        /*
+        GET 으로 데이터 보내기
+        url = "http://" + bridge.getResourceCache().getBridgeConfiguration().getIpAddress()"
+        + "/api/" + username + "/lights/2";
+
+         */
+        hueManager.getPhHueSDK().getSelectedBridge().doHTTPGet("url", new PHHTTPListener() {
+            @Override
+            public void onHTTPResponse(String s) {
+
+            }
+        });
+        /*
+        PUT으로 데이터 보내기
+        url = "http://" + bridge.getResourceCache().getBridgeConfiguration().getIpAddress()"
+        + "/api/" + username + "/lights/3/state";
+        json = "{\"on\": true, \"bri\": 222 }";
+         */
+        hueManager.getPhHueSDK().getSelectedBridge().doHTTPPut("url", "json {}", new PHHTTPListener() {
             @Override
             public void onHTTPResponse(String s) {
 
