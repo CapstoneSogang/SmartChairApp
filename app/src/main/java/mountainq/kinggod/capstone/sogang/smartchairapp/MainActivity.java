@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.philips.lighting.hue.sdk.PHAccessPoint;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TestDataBaseActivity";
     private DbOpenHelper mDbOpenHelper = new DbOpenHelper(this);
     private Cursor mCursor;
-    private Graph waistGraph, neckGraph, pieGraph;
+    private Graph waistGraph, neckGraph, pieGraph, barGraph;
     private String date = "0319";
     // private InfoClass mInfoClass;
     // private ArrayList<infoclass> mInfoArray;
@@ -60,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
         pieGraph = new Graph(mDbOpenHelper, pieChart);
         pieGraph.drawPieGraph(date);
+
+        BarChart barChart = (BarChart) findViewById(R.id.bar_chart);
+        barGraph = new Graph(mDbOpenHelper, barChart);
+        barGraph.drawBarGraph();
 
 
 
