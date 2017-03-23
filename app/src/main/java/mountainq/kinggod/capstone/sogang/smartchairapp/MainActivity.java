@@ -167,6 +167,28 @@ public class MainActivity extends AppCompatActivity {
         //정자세 -> 걸쳐앉음 -> 정자세 -> 거북목 -> 정자세
         mDbOpenHelper.deleteAll(); //나중에 삭제할 부분. 디버깅용
 
+        mDbOpenHelper.insertColumn("0317","1417","1" , "0");
+        mDbOpenHelper.insertColumn("0317","1418","1" , "0");
+        mDbOpenHelper.insertColumn("0317","1419","1" , "0");
+        mDbOpenHelper.insertColumn("0317","1420","1" , "0");
+        mDbOpenHelper.insertColumn("0317","1417","0" , "0");
+        mDbOpenHelper.insertColumn("0317","1417","0" , "1");
+        mDbOpenHelper.insertColumn("0317","1417","0" , "1");
+        mDbOpenHelper.insertColumn("0317","1417","0" , "1");
+        mDbOpenHelper.insertColumn("0317","1417","0" , "1");
+        mDbOpenHelper.insertColumn("0317","1417","0" , "0");
+        mDbOpenHelper.insertColumn("0317","1417","0" , "0");
+        mDbOpenHelper.insertColumn("0317","1417","1" , "0");
+        mDbOpenHelper.insertColumn("0317","1417","1" , "0");
+        mDbOpenHelper.insertColumn("0317","1417","1" , "0");
+        mDbOpenHelper.insertColumn("0317","1400","3" , "5");
+        mDbOpenHelper.insertColumn("0317","1401","0" , "5");
+        mDbOpenHelper.insertColumn("0317","1402","0" , "6");
+        mDbOpenHelper.insertColumn("0317","1403","0" , "6");
+        mDbOpenHelper.insertColumn("0317","1404","0" , "7");
+        mDbOpenHelper.insertColumn("0317","1405","0" , "6");
+        mDbOpenHelper.insertColumn("0317","1406","0" , "5");
+
         mDbOpenHelper.insertColumn("0318","1417","1" , "0");
         mDbOpenHelper.insertColumn("0318","1418","1" , "0");
         mDbOpenHelper.insertColumn("0318","1419","1" , "0");

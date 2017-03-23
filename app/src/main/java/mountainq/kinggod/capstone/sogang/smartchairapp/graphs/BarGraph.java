@@ -118,39 +118,48 @@ public class BarGraph extends Graph {
 
         //날짜별 자세의 건강도 = goodPos/allData
 //        Log.d("numofdata",Integer.toString(numOfData=mCursor.getCount()));
-        for(int i=0;i<(numOfData=mCursor.getCount());i++) {
+        if(barFlag.equals("posture")) { //자세 막대 그래프 그리기
+            for (int i = 0; i < numOfData; i++) {
 
-            if(i==0) {
-                if (neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
-                    goodPos++;
-                allData++;
-            }
-            else if(_date[i].equals(_date[i-1]) && i!=numOfData-1 ) {
-                if (neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
-                    goodPos++;
-                allData++;
-            }
+                if (i == 0) {
+                    if (neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                        goodPos++;
+                    allData++;
+                } else if (_date[i].equals(_date[i - 1]) && i != numOfData - 1) {
+                    if (neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                        goodPos++;
+                    allData++;
+                } else {
+                    if (allData == 0) {
 
-            else{
-                if(allData==0)
-                {
+                    } else if (goodPos == 0)
+                        yVals1.add(new BarEntry(Integer.parseInt(_date[i - 1]), 0));
+                    else {
+                        yVals1.add(new BarEntry(Integer.parseInt(_date[i - 1]), goodPos / allData));
 
+                        // Log.d(Integer.toString(tp),Float.toString(goodPos / allData));
+                        Log.d("bar", _date[i]);
+                    }
+                    allData = 0;
+                    goodPos = 0;
                 }
-                else if(goodPos==0)
-                    yVals1.add(new BarEntry(Integer.parseInt(_date[i-1]),0));
-                else {
-                    yVals1.add(new BarEntry(Integer.parseInt(_date[i-1]), goodPos / allData));
-                    //   allData = 0;
-                    //   goodPos = 0;
-                    // Log.d(Integer.toString(tp),Float.toString(goodPos / allData));
-                    Log.d("bar",_date[i]);
+
+            }
+        }
+        else { //공부량 막대 그래프 그리기
+            for(int i=0; i<numOfData;i ++)
+            {
+                if(i==0)
+                    allData++;
+                else if(_date[i].equals(_date[i-1]) && i != numOfData-1)
+                    allData++;
+                else{
+                    yVals1.add(new BarEntry(Integer.parseInt(_date[i - 1]), allData));
+                    allData=0;
                 }
             }
-
-
 
         }
-
 
 /*
         for (int i = (int) start; i < start + 5 + 1; i++) {
