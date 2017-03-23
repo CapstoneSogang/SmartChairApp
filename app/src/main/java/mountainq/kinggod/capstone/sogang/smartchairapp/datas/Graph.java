@@ -60,6 +60,7 @@ public class Graph {
     private float waistHealth[] = new float[MAX_DATA];
     private float neckHealth[] = new float[MAX_DATA];
 
+    private int dateBase=0; //가장 최근 날짜의 인덱스
 
 
     private int numOfData;
@@ -81,13 +82,14 @@ public class Graph {
     {
         this.mDbOpenHelper = mDbOpenHelper;
         this.barChart = chart;
-     //   getDataBase("bar chart");
+        getDataBase("bar chart");
     }
 
 
     private void getDataBase(String chartFlag)
     {
-        mCursor = mDbOpenHelper.readDbHelper("0319");
+        mCursor = mDbOpenHelper.readDbHelper();
+       // mCursor = mDbOpenHelper.readDbHelper()
         mCursor.moveToFirst();
 
         Log.d(Integer.toString((mCursor.getCount())),"zzzz");
@@ -109,22 +111,35 @@ public class Graph {
 
     private void graphAlgorithm() //미분시켜서 그래프 좌표 뽑아내기 -> 30분 자세면 100%변화라 가정하자
     {
-        if (waist[0].equals("0")) //잘못된 자세로 앉기 시작
+       // int dateBase=0; //가장 최근 날짜로부터의 데이터들
+
+        for(int i=0;i<numOfData;i++)
         {
-            waistHealth[0]=0;   //초기값
+            if(_date[i].equals(_date[numOfData-1]))
+            {
+                dateBase=i; //가장 최근 날짜로부터의 데이터들
+                Log.d("datebase", Integer.toString(i));
+                Log.d("numOfData", Integer.toString(numOfData));
+                break;
+            }
+        }
+
+        if (waist[dateBase].equals("0")) //잘못된 자세로 앉기 시작
+        {
+            waistHealth[dateBase]=0;   //초기값
         }
         else    //정자세
-            waistHealth[0]=100; //단위는 %
+            waistHealth[dateBase]=100; //단위는 %
 
-        if (neck[0].equals("0")) //잘못된 자세로 앉기 시작
+        if (neck[dateBase].equals("0")) //잘못된 자세로 앉기 시작
         {
-            neckHealth[0]=0;   //초기값
+            neckHealth[dateBase]=0;   //초기값
         }
         else    //정자세
-            neckHealth[0]=100; //단위는 %
+            neckHealth[dateBase]=100; //단위는 %
 
 
-        for(int i=1;i<numOfData;i++)
+        for(int i=dateBase+1;i<numOfData;i++)
         {
             int waistFlag = (waist[i].equals("0")) ? -1 : 1 ;    //+면 그래프상승 -면 그래프 하강
             int neckFlag = (neck[i].equals("0")) ? -1 : 1 ;    //+면 그래프상승 -면 그래프 하강
@@ -143,8 +158,10 @@ public class Graph {
                 neckHealth[i]=100;
             if(neckHealth[i]<=0)
                 neckHealth[i]=0;
-
-            Log.d("waistHealth",Float.toString(waistHealth[i]));
+            Log.d("datebase",Integer.toString(dateBase));
+            Log.d("date",_date[i]);
+            Log.d("waistHealth",waist[i]);
+            Log.d("neckHealth",neck[i]);
         }
 
 
@@ -159,13 +176,13 @@ public class Graph {
         LineDataSet dataSet;
         //waist health data grpah
         if (sensorFlag.equals("waist")) {
-            for (int i = 0; i < numOfData; i++)
+            for (int i = dateBase; i < numOfData; i++)
                 entries.add(new Entry(Float.parseFloat(_time[i]), waistHealth[i]));
             //     entries.add(new Entry(Float.parseFloat(_time[i]), Float.parseFloat(waist[i])));
             dataSet= new LineDataSet(entries, "Waist Health");
         }
         else {      //sensorFlag = neck
-            for (int i = 0; i < numOfData; i++)
+            for (int i = dateBase; i < numOfData; i++)
                 entries.add(new Entry(Float.parseFloat(_time[i]), neckHealth[i]));
             dataSet = new LineDataSet(entries, "Neck Health");
         }
@@ -340,7 +357,7 @@ public class Graph {
         // the chart.
         float waistPro=0,neckPro=0,bothPro=0,goodPos=0;
 
-        for(int i=0;i<(numOfData=mCursor.getCount());i++) {
+        for(int i=dateBase;i<numOfData;i++) {
             if(_date[i].equals(date))
             {
                 if(neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
@@ -366,7 +383,7 @@ public class Graph {
 
     }
 
-    public void drawBarGraph()
+    public void drawBarGraph(String barFlag)
     {
       //  barChart.setOnChartValueSelectedListener(this);
 
@@ -441,7 +458,7 @@ public class Graph {
         mSeekBarX.setOnSeekBarChangeListener(this);
 */
 
-        setBarData();
+        setBarData(barFlag);
         // barChart.setDrawLegend(false);
 
 
@@ -449,12 +466,51 @@ public class Graph {
 
     }
 
-    void setBarData()
+    void setBarData(String barFlag)
     {
         float start = 1f;
+        float allData=0,goodPos=0;
+        int tp=0;
 
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
 
+        //날짜별 자세의 건강도 = goodPos/allData
+//        Log.d("numofdata",Integer.toString(numOfData=mCursor.getCount()));
+        for(int i=0;i<(numOfData=mCursor.getCount());i++) {
+
+            if(i==0) {
+                if (neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                    goodPos++;
+                allData++;
+            }
+            else if(_date[i].equals(_date[i-1]) && i!=numOfData-1 ) {
+                if (neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                    goodPos++;
+                allData++;
+            }
+
+            else{
+                if(allData==0)
+                {
+
+                }
+                else if(goodPos==0)
+                    yVals1.add(new BarEntry(Integer.parseInt(_date[i-1]),0));
+                else {
+                    yVals1.add(new BarEntry(Integer.parseInt(_date[i-1]), goodPos / allData));
+                 //   allData = 0;
+                 //   goodPos = 0;
+                   // Log.d(Integer.toString(tp),Float.toString(goodPos / allData));
+                    Log.d("bar",_date[i]);
+                }
+            }
+
+
+
+        }
+
+
+/*
         for (int i = (int) start; i < start + 5 + 1; i++) {
             float mult = (10 + 1);
             float val = (float) (Math.random() * mult);
@@ -465,7 +521,7 @@ public class Graph {
                 yVals1.add(new BarEntry(i, val));
             }
         }
-
+*/
         BarDataSet set1;
 
         if (barChart.getData() != null &&

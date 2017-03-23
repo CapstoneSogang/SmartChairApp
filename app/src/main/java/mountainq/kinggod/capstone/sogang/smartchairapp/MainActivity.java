@@ -62,10 +62,13 @@ public class MainActivity extends AppCompatActivity {
         pieGraph = new Graph(mDbOpenHelper, pieChart);
         pieGraph.drawPieGraph(date);
 
-        BarChart barChart = (BarChart) findViewById(R.id.bar_chart);
-        barGraph = new Graph(mDbOpenHelper, barChart);
-        barGraph.drawBarGraph();
+        BarChart barChartWork = (BarChart) findViewById(R.id.bar_chart_work);
+        barGraph = new Graph(mDbOpenHelper, barChartWork);
+        barGraph.drawBarGraph("work");
 
+        BarChart barChartPosture = (BarChart) findViewById(R.id.bar_chart_posture);
+        barGraph = new Graph(mDbOpenHelper, barChartPosture);
+        barGraph.drawBarGraph("posture");
 
 
 
@@ -159,6 +162,21 @@ public class MainActivity extends AppCompatActivity {
 
         //정자세 -> 걸쳐앉음 -> 정자세 -> 거북목 -> 정자세
         mDbOpenHelper.deleteAll(); //나중에 삭제할 부분. 디버깅용
+
+        mDbOpenHelper.insertColumn("0318","1417","1" , "0");
+        mDbOpenHelper.insertColumn("0318","1418","1" , "0");
+        mDbOpenHelper.insertColumn("0318","1419","1" , "0");
+        mDbOpenHelper.insertColumn("0318","1420","1" , "0");
+        mDbOpenHelper.insertColumn("0318","1417","0" , "0");
+        mDbOpenHelper.insertColumn("0318","1417","0" , "1");
+        mDbOpenHelper.insertColumn("0318","1417","0" , "1");
+        mDbOpenHelper.insertColumn("0318","1417","0" , "1");
+        mDbOpenHelper.insertColumn("0318","1417","0" , "1");
+        mDbOpenHelper.insertColumn("0318","1417","0" , "0");
+        mDbOpenHelper.insertColumn("0318","1417","0" , "0");
+        mDbOpenHelper.insertColumn("0318","1417","1" , "0");
+        mDbOpenHelper.insertColumn("0318","1417","1" , "0");
+        mDbOpenHelper.insertColumn("0318","1417","1" , "0");
 
         mDbOpenHelper.insertColumn("0319","1400","3" , "5");
         mDbOpenHelper.insertColumn("0319","1401","0" , "5");
