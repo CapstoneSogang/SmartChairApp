@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
         pieGraph = new Graph(mDbOpenHelper, pieChart);
-
         pieGraph.drawPieGraph(date);
+
 
 
 
@@ -173,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
         mDbOpenHelper.insertColumn("0319","1415","6" , "6");
         mDbOpenHelper.insertColumn("0319","1416","6" , "7");
         mDbOpenHelper.insertColumn("0319","1417","6" , "6");
+        mDbOpenHelper.insertColumn("0319","1417","0" , "0");
+        mDbOpenHelper.insertColumn("0319","1417","0" , "0");
+        mDbOpenHelper.insertColumn("0319","1417","0" , "0");
 
 
         Log.d("insert", "zzz");

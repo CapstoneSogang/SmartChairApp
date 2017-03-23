@@ -283,17 +283,20 @@ public class Graph {
 
 
         //set data
+        ArrayList<PieEntry> entries = setPieData();
+        /*
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
+
         for (int i = 0; i < 5 ; i++) {
             //여기서 막혔당 ㅠㅠ
 
             entries.add(new PieEntry((float)  5));
         }
-
-        PieDataSet dataSet = new PieDataSet(entries, "Election Results");
+*/
+        PieDataSet dataSet = new PieDataSet(entries, "Evaluation of your posture");
 
         //dataSet.setDrawIcons(false);
 
@@ -312,6 +315,41 @@ public class Graph {
         pieChart.highlightValues(null);
 
         pieChart.invalidate();
+    }
+
+
+    ArrayList<PieEntry> setPieData()
+    {
+        ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
+
+        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
+        // the chart.
+        float waistPro=0,neckPro=0,bothPro=0,goodPos=0;
+
+        for(int i=0;i<(numOfData=mCursor.getCount());i++) {
+            if(_date[i].equals("0319"))
+            {
+                if(neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                    goodPos++;
+                if(!neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                    neckPro++;
+                if(neck[i].equals("0") && !waist[i].equals("0")) // 건강한 상태
+                    waistPro++;
+                if(!neck[i].equals("0") && !waist[i].equals("0")) // 건강한 상태
+                    bothPro++;
+
+            }
+
+        }
+
+        entries.add(new PieEntry(goodPos,"Healthy"));
+        entries.add(new PieEntry(neckPro,"Neck Problem"));
+        entries.add(new PieEntry(waistPro,"Waist Problem"));
+        entries.add(new PieEntry(bothPro,"Both problem"));
+
+
+        return entries;
+
     }
 
 
