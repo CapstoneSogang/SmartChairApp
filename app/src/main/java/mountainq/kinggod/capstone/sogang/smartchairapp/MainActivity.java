@@ -19,8 +19,11 @@ import com.philips.lighting.model.PHHueParsingError;
 import java.util.List;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.Graph;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.BarGraph;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.Graph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.ReceiveData;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.LineGraph;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.PieGraph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueManager;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.LOG;
 ///
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private DbOpenHelper mDbOpenHelper = new DbOpenHelper(this);
     private Cursor mCursor;
     private Graph waistGraph, neckGraph, pieGraph, barGraph;
+
     private String date = "0319";
     // private InfoClass mInfoClass;
     // private ArrayList<infoclass> mInfoArray;
@@ -51,24 +55,24 @@ public class MainActivity extends AppCompatActivity {
         Log.d("insert", "zzz");
         setDataBase(mDbOpenHelper);
         LineChart waistChart = (LineChart) findViewById(R.id.waist_chart);
-        waistGraph = new Graph(mDbOpenHelper,waistChart);
-        waistGraph.drawLineGraph("waist");
+        waistGraph = new LineGraph(mDbOpenHelper,waistChart);
+        waistGraph.drawGraph("waist");
 
         LineChart neckChart = (LineChart) findViewById(R.id.neck_chart);
-        neckGraph = new Graph(mDbOpenHelper,neckChart);
-        neckGraph.drawLineGraph("neck");
+        neckGraph = new LineGraph(mDbOpenHelper,neckChart);
+        neckGraph.drawGraph("neck");
 
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
-        pieGraph = new Graph(mDbOpenHelper, pieChart);
-        pieGraph.drawPieGraph(date);
+        pieGraph = new PieGraph(mDbOpenHelper, pieChart);
+        pieGraph.drawGraph(date);
 
         BarChart barChartWork = (BarChart) findViewById(R.id.bar_chart_work);
-        barGraph = new Graph(mDbOpenHelper, barChartWork);
-        barGraph.drawBarGraph("work");
+        barGraph = new BarGraph(mDbOpenHelper, barChartWork);
+        barGraph.drawGraph("work");
 
         BarChart barChartPosture = (BarChart) findViewById(R.id.bar_chart_posture);
-        barGraph = new Graph(mDbOpenHelper, barChartPosture);
-        barGraph.drawBarGraph("posture");
+        barGraph = new BarGraph(mDbOpenHelper, barChartPosture);
+        barGraph.drawGraph("posture");
 
 
 
