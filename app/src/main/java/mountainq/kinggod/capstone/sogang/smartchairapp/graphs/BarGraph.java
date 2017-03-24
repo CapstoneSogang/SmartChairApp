@@ -159,18 +159,6 @@ public class BarGraph extends Graph {
 
         }
 
-/*
-        for (int i = (int) start; i < start + 5 + 1; i++) {
-            float mult = (10 + 1);
-            float val = (float) (Math.random() * mult);
-
-            if (Math.random() * 100 < 25) {
-                yVals1.add(new BarEntry(i, val ));
-            } else {
-                yVals1.add(new BarEntry(i, val));
-            }
-        }
-*/
         BarDataSet set1;
 
         if (barChart.getData() != null &&

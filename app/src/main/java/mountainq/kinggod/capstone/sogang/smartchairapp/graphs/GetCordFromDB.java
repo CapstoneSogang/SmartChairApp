@@ -40,49 +40,7 @@ public class GetCordFromDB {
         //getDBFromServer.getData();
         getCoordinate();
     }
-/*
-    public void getData(){
-        Log.d("reciece","data");
-        //http interface
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(HTTPInterface.URL).build();
-        HTTPInterface service = retrofit.create(HTTPInterface.class);
-        final Call<ResponseBody> comment = service.getComment(1);
-        comment.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String body=response.body().string();
-                    Log.d("http test",body);
-                    ////
-                    JSONArray jarray = new JSONArray(body);   // JSONArray 생성
-                    for(int i=0; i < jarray.length(); i++){
-                        JSONObject jObject = jarray.getJSONObject(i);  // JSONObject 추출
-                        int postId = jObject.getInt("postId");
-                        String name = jObject.getString("name");
-                        String email = jObject.getString("email");
 
-                        Log.d("http test2 ",email);
-                    }
-
-
-                    //Log.d("responsebody type",response.body().)
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-        //Call<List<Repo>> repos = service.listRepos("octocat");
-        getCoordinate();
-
-    }
-*/
     public void getCoordinate()
     {
         mCursor = mDbOpenHelper.readDbHelper();
@@ -101,17 +59,11 @@ public class GetCordFromDB {
 
 
         }
-       // if (chartFlag.equals("line chart"))
-        //    graphAlgorithm();
-        //  else if (chartFlag.equals("pie chart"))
         graphAlgorithm();
     }
 
     private void graphAlgorithm() //미분시켜서 그래프 좌표 뽑아내기 -> 30분 자세면 100%변화라 가정하자
     {
-
-        //nt recentDateIdx=0; //가장 최근 날짜로부터의 데이터들
-
         for(int i=0;i<numOfData;i++)
         {
             if(_date[i].equals(_date[numOfData-1]))
@@ -162,14 +114,5 @@ public class GetCordFromDB {
             Log.d("waistHealth",waist[i]);
             Log.d("neckHealth",neck[i]);
         }
-
-
-
-
-
     }
-
-
-
-
 }
