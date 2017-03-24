@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.GetCordFromDB;
 import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HTTPInterface;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -23,13 +24,15 @@ public class GetDBFromServer {
 
     private DbOpenHelper mDbOpenHelper;
 
-    public GetDBFromServer(DbOpenHelper mDbOpenHelper){
+    public GetDBFromServer(DbOpenHelper mDbOpenHelper, GetCordFromDB getCordFromDB){
         this.mDbOpenHelper = mDbOpenHelper;
-        getData();
+       // getCordFromDB.check="1";
+
+        getData(getCordFromDB);
     }
 
 
-    public void getData(){
+    public void getData(GetCordFromDB getCordFromDB){
         Log.d("reciece","data");
         //http interface
         Retrofit retrofit = new Retrofit.Builder().baseUrl(HTTPInterface.URL).build();

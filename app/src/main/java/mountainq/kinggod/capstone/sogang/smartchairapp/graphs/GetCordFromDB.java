@@ -29,13 +29,14 @@ public class GetCordFromDB {
 
     public float waistHealth[] = new float[MAX_DATA];
     public float neckHealth[] = new float[MAX_DATA];
-
+   // public String check="0";
 
     public GetCordFromDB(DbOpenHelper mDbOpenHelper)
     {
         this.mDbOpenHelper = mDbOpenHelper;
         //getData();
-        getDBFromServer =new GetDBFromServer(mDbOpenHelper);
+        getDBFromServer =new GetDBFromServer(mDbOpenHelper,this);
+      //  Log.d("check", check);
         //getDBFromServer.getData();
         getCoordinate();
     }
