@@ -7,13 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-
 /**
  * Created by jwahn37 on 2017. 3. 18..
  */
@@ -76,15 +69,15 @@ public class DbOpenHelper {
     public void deleteAll()
     {
         // Define 'where' part of query.
-        String selection = DataBases.CreateDB._DATE + " LIKE ?";
+  //      String selection = DataBases.CreateDB._DATE + " LIKE ?";
 // Specify arguments in placeholder order.
-        String[] selectionArgs = { "0319" };
+       // String[] selectionArgs = { "0319" };
 // Issue SQL statement.
-        mDB.delete(DataBases.CreateDB._TABLENAME, selection, selectionArgs);
+        mDB.delete(DataBases.CreateDB._TABLENAME, null, null);
 
     }
 
-    public Cursor readDbHelper(String _date){
+    public Cursor readDbHelper(/*String _date*/){
         mDB = mDBHelper.getReadableDatabase();
 
 
@@ -105,17 +98,23 @@ public class DbOpenHelper {
 // How you want the results sorted in the resulting Cursor
         String sortOrder =
                 //    DataBases.CreateDB._TIME + " DESC";
-                DataBases.CreateDB._TIME + " ASC";
+                DataBases.CreateDB._DATE + " ASC";
+
+
 
         Cursor c = mDB.query(
                 DataBases.CreateDB._TABLENAME,                   // The table to query
                 projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
+               // selection,                                // The columns for the WHERE clause
+                null,
+               // selectionArgs,                            // The values for the WHERE clause
+                null,
                 null,                                     // don't group the rows
                 null,                                     // don't filter by row groups
                 sortOrder                                 // The sort order
         );
+
+
 
         return c;
     }
