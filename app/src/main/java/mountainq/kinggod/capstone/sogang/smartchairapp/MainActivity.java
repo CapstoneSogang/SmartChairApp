@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Log.d("???","zzzz");
 
-        setDataBase(mDbOpenHelper);
+      //  setDataBase(mDbOpenHelper);
         GetCordFromDB getCordFromDB = new GetCordFromDB(mDbOpenHelper);
         //getCordFromDB.getData();
        // getCordFromDB.getCoordinate();
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
+/*
     protected void setDataBase(DbOpenHelper mDbOpenHelper) //디비 설정하기
     {
         mDbOpenHelper.open();
@@ -231,5 +231,5 @@ public class MainActivity extends AppCompatActivity {
         Log.d("insert", "zzz");
 
     }
-
+*/
 }
