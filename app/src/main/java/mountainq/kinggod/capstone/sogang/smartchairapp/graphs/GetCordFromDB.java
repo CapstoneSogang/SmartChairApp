@@ -1,4 +1,4 @@
-package mountainq.kinggod.capstone.sogang.smartchairapp.datas;
+package mountainq.kinggod.capstone.sogang.smartchairapp.graphs;
 
 import android.database.Cursor;
 import android.util.Log;
@@ -9,6 +9,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DataBases;
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
 import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HTTPInterface;
 import okhttp3.ResponseBody;
 import retrofit2.Call;

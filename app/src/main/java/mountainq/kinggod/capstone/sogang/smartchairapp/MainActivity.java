@@ -21,7 +21,7 @@ import java.util.List;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.BarGraph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.Graph;
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetCordFromDB;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.GetCordFromDB;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.LineGraph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.PieGraph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueManager;

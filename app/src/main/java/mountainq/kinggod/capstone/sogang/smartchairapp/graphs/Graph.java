@@ -8,8 +8,6 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetCordFromDB;
-
 /**
  * Created by jwahn37 on 2017. 3. 19..
  */

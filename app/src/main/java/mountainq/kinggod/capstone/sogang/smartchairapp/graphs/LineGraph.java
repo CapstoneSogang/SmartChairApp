@@ -17,8 +17,6 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetCordFromDB;
-
 /**
  * Created by jwahn37 on 2017. 3. 23..
  */

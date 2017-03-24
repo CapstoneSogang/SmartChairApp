@@ -11,8 +11,6 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetCordFromDB;
-
 /**
  * Created by jwahn37 on 2017. 3. 23..
  */

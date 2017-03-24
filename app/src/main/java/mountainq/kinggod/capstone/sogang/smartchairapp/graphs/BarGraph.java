@@ -14,8 +14,6 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetCordFromDB;
-
 /**
  * Created by jwahn37 on 2017. 3. 23..
  */
@@ -182,7 +180,10 @@ public class BarGraph extends Graph {
             barChart.getData().notifyDataChanged();
             barChart.notifyDataSetChanged();
         } else {
-            set1 = new BarDataSet(yVals1, "The year 2017");
+            if(barFlag.equals("posture")) //자세 막대그래프 이름 설정
+                set1 = new BarDataSet(yVals1, "Your posture habit");
+            else    //작업량 막대 그래프 이름 설정
+                set1 = new BarDataSet(yVals1, "Your working hour");
 
             // set1.setDrawIcons(false);
 
