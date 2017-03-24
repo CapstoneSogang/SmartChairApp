@@ -3,20 +3,9 @@ package mountainq.kinggod.capstone.sogang.smartchairapp.graphs;
 import android.database.Cursor;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DataBases;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
-import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HTTPInterface;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetDBFromServer;
 
 /**
  * Created by jwahn37 on 2017. 3. 21..
@@ -35,6 +24,7 @@ public class GetCordFromDB {
     public String neck[] = new String[ MAX_DATA];
     public Cursor mCursor;
     DbOpenHelper mDbOpenHelper;
+    GetDBFromServer getDBFromServer;
     public int numOfData;
 
     public float waistHealth[] = new float[MAX_DATA];
@@ -44,9 +34,12 @@ public class GetCordFromDB {
     public GetCordFromDB(DbOpenHelper mDbOpenHelper)
     {
         this.mDbOpenHelper = mDbOpenHelper;
-        getData();
+        //getData();
+        getDBFromServer =new GetDBFromServer(mDbOpenHelper);
+        //getDBFromServer.getData();
+        getCoordinate();
     }
-
+/*
     public void getData(){
         Log.d("reciece","data");
         //http interface
@@ -88,7 +81,7 @@ public class GetCordFromDB {
         getCoordinate();
 
     }
-
+*/
     public void getCoordinate()
     {
         mCursor = mDbOpenHelper.readDbHelper();
