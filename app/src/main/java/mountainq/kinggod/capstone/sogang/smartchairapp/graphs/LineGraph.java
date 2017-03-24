@@ -17,7 +17,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetCordFromDB;
 
 /**
  * Created by jwahn37 on 2017. 3. 23..
@@ -25,8 +25,8 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
 
 public class LineGraph extends Graph {
 
-    public LineGraph(DbOpenHelper mDbOpenHelper, LineChart chart) {
-        super(mDbOpenHelper, chart);
+    public LineGraph(GetCordFromDB getCordFromDB, LineChart chart) {
+        super(getCordFromDB, chart);
     }
 
     public void drawGraph(String sensorFlag)
@@ -35,14 +35,14 @@ public class LineGraph extends Graph {
         LineDataSet dataSet;
         //waist health data grpah
         if (sensorFlag.equals("waist")) {
-            for (int i = dateBase; i < numOfData; i++)
-                entries.add(new Entry(Float.parseFloat(_time[i]), waistHealth[i]));
+            for (int i = cord.recentDateIdx; i < cord.numOfData; i++)
+                entries.add(new Entry(Float.parseFloat(cord._time[i]), cord.waistHealth[i]));
             //     entries.add(new Entry(Float.parseFloat(_time[i]), Float.parseFloat(waist[i])));
             dataSet= new LineDataSet(entries, "Waist Health");
         }
         else {      //sensorFlag = neck
-            for (int i = dateBase; i < numOfData; i++)
-                entries.add(new Entry(Float.parseFloat(_time[i]), neckHealth[i]));
+            for (int i = cord.recentDateIdx; i < cord.numOfData; i++)
+                entries.add(new Entry(Float.parseFloat(cord._time[i]), cord.neckHealth[i]));
             dataSet = new LineDataSet(entries, "Neck Health");
         }
 

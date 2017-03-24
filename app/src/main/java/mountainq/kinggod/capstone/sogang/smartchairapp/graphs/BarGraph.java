@@ -14,15 +14,15 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetCordFromDB;
 
 /**
  * Created by jwahn37 on 2017. 3. 23..
  */
 
 public class BarGraph extends Graph {
-    public BarGraph(DbOpenHelper mDbOpenHelper, BarChart chart) {
-        super(mDbOpenHelper, chart);
+    public BarGraph(GetCordFromDB getCordFromDB, BarChart chart) {
+        super(getCordFromDB, chart);
     }
 
     public void drawGraph(String barFlag)
@@ -119,26 +119,26 @@ public class BarGraph extends Graph {
         //날짜별 자세의 건강도 = goodPos/allData
 //        Log.d("numofdata",Integer.toString(numOfData=mCursor.getCount()));
         if(barFlag.equals("posture")) { //자세 막대 그래프 그리기
-            for (int i = 0; i < numOfData; i++) {
+            for (int i = 0; i < cord.numOfData; i++) {
 
                 if (i == 0) {
-                    if (neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                    if (cord.neck[i].equals("0") && cord.waist[i].equals("0")) // 건강한 상태
                         goodPos++;
                     allData++;
-                } else if (_date[i].equals(_date[i - 1]) && i != numOfData - 1) {
-                    if (neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                } else if (cord._date[i].equals(cord._date[i - 1]) && i != cord.numOfData - 1) {
+                    if (cord.neck[i].equals("0") && cord.waist[i].equals("0")) // 건강한 상태
                         goodPos++;
                     allData++;
                 } else {
                     if (allData == 0) {
 
                     } else if (goodPos == 0)
-                        yVals1.add(new BarEntry(Integer.parseInt(_date[i - 1]), 0));
+                        yVals1.add(new BarEntry(Integer.parseInt(cord._date[i - 1]), 0));
                     else {
-                        yVals1.add(new BarEntry(Integer.parseInt(_date[i - 1]), goodPos / allData));
+                        yVals1.add(new BarEntry(Integer.parseInt(cord._date[i - 1]), goodPos / allData));
 
                         // Log.d(Integer.toString(tp),Float.toString(goodPos / allData));
-                        Log.d("bar", _date[i]);
+                        Log.d("bar", cord._date[i]);
                     }
                     allData = 0;
                     goodPos = 0;
@@ -147,14 +147,14 @@ public class BarGraph extends Graph {
             }
         }
         else { //공부량 막대 그래프 그리기
-            for(int i=0; i<numOfData;i ++)
+            for(int i=0; i<cord.numOfData;i ++)
             {
                 if(i==0)
                     allData++;
-                else if(_date[i].equals(_date[i-1]) && i != numOfData-1)
+                else if(cord._date[i].equals(cord._date[i-1]) && i != cord.numOfData-1)
                     allData++;
                 else{
-                    yVals1.add(new BarEntry(Integer.parseInt(_date[i - 1]), allData));
+                    yVals1.add(new BarEntry(Integer.parseInt(cord._date[i - 1]), allData));
                     allData=0;
                 }
             }

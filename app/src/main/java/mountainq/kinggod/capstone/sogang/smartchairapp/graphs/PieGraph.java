@@ -11,15 +11,15 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetCordFromDB;
 
 /**
  * Created by jwahn37 on 2017. 3. 23..
  */
 
 public class PieGraph extends Graph {
-    public PieGraph(DbOpenHelper mDbOpenHelper, PieChart chart) {
-        super(mDbOpenHelper, chart);
+    public PieGraph(GetCordFromDB getCordFromDB, PieChart chart) {
+        super(getCordFromDB, chart);
     }
     public void drawGraph(String date)
     {
@@ -105,16 +105,16 @@ public class PieGraph extends Graph {
         // the chart.
         float waistPro=0,neckPro=0,bothPro=0,goodPos=0;
 
-        for(int i=dateBase;i<numOfData;i++) {
-            if(_date[i].equals(date))
+        for(int i=cord.recentDateIdx;i<cord.numOfData;i++) {
+            if(cord._date[i].equals(date))
             {
-                if(neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                if(cord.neck[i].equals("0") && cord.waist[i].equals("0")) // 건강한 상태
                     goodPos++;
-                if(!neck[i].equals("0") && waist[i].equals("0")) // 건강한 상태
+                if(!cord.neck[i].equals("0") && cord.waist[i].equals("0")) // 건강한 상태
                     neckPro++;
-                if(neck[i].equals("0") && !waist[i].equals("0")) // 건강한 상태
+                if(cord.neck[i].equals("0") && !cord.waist[i].equals("0")) // 건강한 상태
                     waistPro++;
-                if(!neck[i].equals("0") && !waist[i].equals("0")) // 건강한 상태
+                if(!cord.neck[i].equals("0") && !cord.waist[i].equals("0")) // 건강한 상태
                     bothPro++;
 
             }
