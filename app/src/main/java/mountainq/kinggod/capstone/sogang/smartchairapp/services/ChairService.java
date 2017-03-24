@@ -8,20 +8,24 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.philips.lighting.hue.listener.PHHTTPListener;
-import com.philips.lighting.hue.sdk.PHAccessPoint;
-import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
-import com.philips.lighting.model.PHBridge;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.MainActivity;
-import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueManager;
+import mountainq.kinggod.capstone.sogang.smartchairapp.R;
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.HueColor;
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
+import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HueDeviceControl;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.PropertyManager;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 /**
  * Created by dnay2 on 2017-03-19.
@@ -34,32 +38,9 @@ public class ChairService extends FirebaseMessagingService {
     private static final int RED = 103;
     private static final int WHITE = 104;
 
-    private static final String BASIC_URL = "";
-
     PropertyManager propertyManager = PropertyManager.getInstance();
-    HueManager hueManager = HueManager.getInstance();
-    PHBridgeSearchManager sm;
-    PHAccessPoint accessPoint;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-
-    }
-
-    private void setHueDevice(){
-        ArrayList<PHAccessPoint> list = hueManager.searchPhHueDevice();
-        if (list.size() > 0) {
-            showNotification("there are some Hue devices near by here.");
-            for (PHAccessPoint ap : list) {
-                propertyManager.setHueIp(ap.getIpAddress());
-            }
-        }
-        PHBridge bridge = hueManager.getPhHueSDK().getSelectedBridge();
-        hueManager.getPhHueSDK().setSelectedBridge(bridge);
-    }
-
-
+    HueDeviceControl deviceControl;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -68,7 +49,22 @@ public class ChairService extends FirebaseMessagingService {
     }
 
     private void showNotification(Map<String, String> data) {
-
+        int code = Integer.parseInt(data.get("code"));
+        changHueLight(code);
+        String message = "default";
+        String title = "title";
+        switch (code){
+            case BLUE:
+                break;
+            case GREEN:
+                break;
+            case RED:
+                break;
+            case WHITE:
+                break;
+        }
+        NotificationCompat.Builder builder = buildSimpleNotification("", "", "Hello Hue", data.get("message"));
+        builder.build();
     }
 
     private void showNotification(String message) {
@@ -80,8 +76,8 @@ public class ChairService extends FirebaseMessagingService {
     private NotificationCompat.Builder buildSimpleNotification(String code, String idx, String title, String message) {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-//                .setSmallIcon(R.drawable.ic_notice_alarm)
-//                .setColor(StaticDatas.MAIN_COLOR)
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setColor(StaticDatas.MAIN_COLOR)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -92,12 +88,10 @@ public class ChairService extends FirebaseMessagingService {
                 .setContentIntent(getPendingIntent(code, idx));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder.setCategory(Notification.CATEGORY_MESSAGE)
-//                    .setColor(StaticDatas.MAIN_COLOR)
-//                    .setSmallIcon(R.drawable.ic_notice_alarm)
+                    .setColor(StaticDatas.MAIN_COLOR)
+                    .setSmallIcon(R.drawable.ic_stat_name)
                     .setPriority(Notification.PRIORITY_HIGH)
                     .setVisibility(Notification.VISIBILITY_PUBLIC);
-
-
         }
         return builder;
     }
@@ -119,44 +113,46 @@ public class ChairService extends FirebaseMessagingService {
         );
     }
 
-    public void changHueLight(int code) {
-        accessPoint.setIpAddress(propertyManager.getHueIp());
-        accessPoint.setUsername(propertyManager.getHueName());
+    public void changHueLight(final int code) {
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("")
+                .build();
+        deviceControl = retrofit.create(HueDeviceControl.class);
 
-         String query = BASIC_URL;
+        HueColor query = null;
         switch (code) {
-            case BLUE: query = "";
+            case BLUE:
+                query = new HueColor(true, 0, 0, 0);
                 break;
-            case GREEN: query = "";
+            case GREEN:
+                query = new HueColor(true, 0, 0, 0);
                 break;
-            case RED: query = "";
+            case RED:
+                query = new HueColor(true, 0, 0, 0);
                 break;
-            case WHITE: query = "";
+            case WHITE:
+                query = new HueColor(true, 0, 0, 0);
                 break;
         }
 
-        /*
-        GET 으로 데이터 보내기
-        url = "http://" + bridge.getResourceCache().getBridgeConfiguration().getIpAddress()"
-        + "/api/" + username + "/lights/2";
+        if(query == null) return;
 
-         */
-        hueManager.getPhHueSDK().getSelectedBridge().doHTTPGet("url", new PHHTTPListener() {
+        Call<ResponseBody> request = deviceControl.changeColor(
+                propertyManager.getHueIp(),
+                propertyManager.getHueName(),
+                query
+        );
+        request.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onHTTPResponse(String s) {
-
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    Log.d("test", "successful");
+                }
             }
-        });
-        /*
-        PUT으로 데이터 보내기
-        url = "http://" + bridge.getResourceCache().getBridgeConfiguration().getIpAddress()"
-        + "/api/" + username + "/lights/3/state";
-        json = "{\"on\": true, \"bri\": 222 }";
-         */
-        hueManager.getPhHueSDK().getSelectedBridge().doHTTPPut("url", "json {}", new PHHTTPListener() {
+
             @Override
-            public void onHTTPResponse(String s) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
 
             }
         });

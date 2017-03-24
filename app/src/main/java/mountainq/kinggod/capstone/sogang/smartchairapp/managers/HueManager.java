@@ -28,7 +28,7 @@ public class HueManager {
     private PHHueSDK phHueSDK;
     private PHBridgeSearchManager sm;
     private PHAccessPoint accessPoint;
-    private ArrayList<PHAccessPoint> accessPoints = null;
+    private ArrayList<PHAccessPoint> founddAccesPoints = null;
 
     public HueManager() {
         phHueSDK = PHHueSDK.getInstance();
@@ -57,18 +57,16 @@ public class HueManager {
         return phHueSDK;
     }
 
-    public ArrayList<PHAccessPoint> searchPhHueDevice(){
-        accessPoints = null;
-
+    public void searchPhHueDevice(){
+        founddAccesPoints = null;
         sm = (PHBridgeSearchManager) phHueSDK.getSDKService(PHHueSDK.SEARCH_BRIDGE);
         sm.search(true, true);
-
-        if(accessPoints != null && accessPoints.size() > 0){
-            return accessPoints;
-        }
-
-        return new ArrayList<>();
     }
+
+    public ArrayList<PHAccessPoint> getFounddAccesPoints() {
+        return founddAccesPoints;
+    }
+
 
 
     /**
@@ -101,7 +99,7 @@ public class HueManager {
         //브릿지 검색결과를 보여주는 곳이다
         @Override
         public void onAccessPointsFound(List<PHAccessPoint> list) {
-            accessPoints = new ArrayList<>(list);
+            founddAccesPoints = new ArrayList<>(list);
         }
 
         //에러생기면 발생 뭔지는 모른다 생긴 오류를 서버로 보내는 걸로 해볼까?

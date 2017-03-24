@@ -1,167 +1,1 @@
-package mountainq.kinggod.capstone.sogang.smartchairapp;
-
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import java.io.IOException;
-
-import mountainq.kinggod.capstone.sogang.smartchairapp.managers.SocketTaskManager;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-
-/**
- * Created by dnay2 on 2017-03-19.
- */
-
-public class RegisterActivity extends AppCompatActivity {
-
-    ProgressDialog progressDialog;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-        progressDialog = new ProgressDialog(this);
-
-    }
-
-    /**
-     * 사용자 인증
-     *
-     * @param id 아이디
-     * @param pw 패스워드
-     * @return 토큰값
-     */
-    private String authenticateUser(String id, String pw, String token) {
-//        progress bar start
-        progressDialog.show();
-
-        String authenticatedToken = "default";
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = new FormBody.Builder()
-                .add("id", id)
-                .add("pw", pw)
-                .add("token", token)
-                .build();
-
-        //request
-        Request request = new Request.Builder()
-                .url(""/* your server address*/)
-                .post(body)
-                .build();
-        Response response = null;
-
-        try {
-            response = client.newCall(request).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-//        progress bar end
-        progressDialog.dismiss();
-
-        if (response != null)
-            authenticatedToken = response.body().toString();
-
-        return authenticatedToken;
-    }
-
-    /**
-     * 라즈베리 파이 등록 지정된 IP주소와 포트번호로 인증된 토큰을 보낸다
-     *
-     * @param authenticatedToken 토큰
-     * @return 성공여부 반환
-     */
-    private boolean registerChair(String authenticatedToken) {
-//        progress bar start
-        progressDialog.show();
-
-        boolean flag = false;
-        long currentTime = System.currentTimeMillis();
-        SocketTaskManager taskManager = new SocketTaskManager();
-        taskManager.execute();
-        taskManager.actionSend(authenticatedToken, 15000);
-        while (taskManager.isSuccessed() || currentTime + 15000 > System.currentTimeMillis()) {
-            if (taskManager.isSuccessed())
-                flag = true;
-        }
-        taskManager.disconnection();
-//        progress bar end
-        progressDialog.dismiss();
-        return flag;
-    }
-
-
-    public AlertDialog makeAlertDialog(String title, String message) {
-        return new AlertDialog.Builder(this)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .create();
-
-    }
-
-    public void makeRegisterFormDialog() {
-        View contentView = View.inflate(this, R.layout.activity_launch, null);
-        EditText textId = (EditText) contentView.findViewById(R.id.textId);
-        EditText textPw = (EditText) contentView.findViewById(R.id.textPw);
-        Button btnOK = (Button) contentView.findViewById(R.id.btnOK);
-        Button btnCancel = (Button) contentView.findViewById(R.id.btnCancel);
-
-
-        Dialog mDialog = new Dialog(this);
-        mDialog.setContentView(contentView);
-        mDialog.show();
-
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
-    }
-
-
-    /**
-     * 버튼 클릭 리스너 XML에 바로 연결되어 있다.
-     *
-     * @param v 누른 뷰를 가져온다
-     */
-    public void clickBtnListener(View v) {
-        switch (v.getId()) {
-            case R.id.btnFindChair://의자찾기 : 아두이노에 토큰 송신
-                break;
-            case R.id.btnRegister: //회원가입 : 서버로 토큰 전달
-                break;
-            case R.id.secondText:
-                break;
-            default:
-                break;
-        }
-    }
-
-}
+package mountainq.kinggod.capstone.sogang.smartchairapp;import android.app.Activity;import android.app.ProgressDialog;import android.content.Context;import android.content.Intent;import android.os.Bundle;import android.support.annotation.Nullable;import android.util.Log;import android.view.View;import android.view.animation.Animation;import android.view.animation.AnimationUtils;import android.widget.Button;import android.widget.EditText;import android.widget.LinearLayout;import android.widget.Toast;import org.json.JSONArray;import org.json.JSONException;import org.json.JSONObject;import java.io.IOException;import mountainq.kinggod.capstone.sogang.smartchairapp.datas.HueRegisterBody;import mountainq.kinggod.capstone.sogang.smartchairapp.datas.UserData;import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.AzureInterface;import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HueDeviceControl;import mountainq.kinggod.capstone.sogang.smartchairapp.managers.PropertyManager;import mountainq.kinggod.capstone.sogang.smartchairapp.managers.SocketTaskManager;import okhttp3.ResponseBody;import retrofit2.Call;import retrofit2.Callback;import retrofit2.Response;import retrofit2.Retrofit;/** * Created by dnay2 on 2017-03-19. */public class RegisterActivity extends Activity {    PropertyManager propertyManager = PropertyManager.getInstance();    ProgressDialog progressDialog;    private LinearLayout userRegisterLL, hueFindLL, hueRegisterLL;    private EditText idEdit, pwEdit;    private Animation move_c_l, move_c_r, move_l_c, move_r_c;    private static int CURR_STAGE = R.id.btnRegister;    private Context mContext = this;    private Retrofit retrofit;    private String ipAddress = "default", userName = "default";    @Override    protected void onCreate(@Nullable Bundle savedInstanceState) {        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_register);        progressDialog = new ProgressDialog(this);        initialize();        retrofit = new Retrofit.Builder()                .baseUrl("")                .build();    }    private void initialize() {        idEdit = (EditText) findViewById(R.id.textId);        pwEdit = (EditText) findViewById(R.id.textPw);        userRegisterLL = (LinearLayout) findViewById(R.id.userRegisterLL);        hueFindLL = (LinearLayout) findViewById(R.id.hueFindLL);        hueRegisterLL = (LinearLayout) findViewById(R.id.hueRegisterLL);        move_c_l = AnimationUtils.loadAnimation(this, R.anim.move_c_l);        move_c_r = AnimationUtils.loadAnimation(this, R.anim.move_c_r);        move_l_c = AnimationUtils.loadAnimation(this, R.anim.move_l_c);        move_r_c = AnimationUtils.loadAnimation(this, R.anim.move_r_c);    }    private void moveAnimation(int viewId) {        switch (viewId) {            case R.id.btnRegister:                CURR_STAGE = R.id.btnHueFind;                userRegisterLL.startAnimation(AnimationUtils.loadAnimation(this, R.anim.move_c_l));                hueFindLL.startAnimation(AnimationUtils.loadAnimation(this, R.anim.move_r_c));                userRegisterLL.setVisibility(View.GONE);                break;            case R.id.btnHueFind:                CURR_STAGE = R.id.btnHueRegister;                hueFindLL.startAnimation(move_c_l);                hueRegisterLL.startAnimation(move_r_c);                hueFindLL.setVisibility(View.GONE);                break;            case R.id.btnHueRegister:                //no change                break;        }    }    /**     * 사용자 인증     *     * @param id 아이디     * @param pw 패스워드     * @return 토큰값     */    private void authenticateUser(String id, String pw, String token) {        AzureInterface azureInterface = retrofit.create(AzureInterface.class);        UserData userData = new UserData(id, pw, token);        Call<ResponseBody> response = azureInterface.createUser(userData);        response.enqueue(new Callback<ResponseBody>() {            @Override            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {                if (response.isSuccessful()) {                    String jsonString = "";                    try{                        jsonString = response.body().string();                        Log.d("test", "userRegister : " + jsonString);                    }catch (IOException e){                        e.printStackTrace();                    }                    try{                        JSONObject jsonObject = new JSONObject(jsonString);                        if(jsonObject.getBoolean("success")){                            //성공했으면                            Log.d("test", "success");                            moveAnimation(R.id.btnRegister);                        }                        else {                            Toast.makeText(RegisterActivity.this, "다시 한번 시도해 주세요", Toast.LENGTH_SHORT).show();                        }                    }catch (JSONException e){                        e.printStackTrace();                    }                }            }            @Override            public void onFailure(Call<ResponseBody> call, Throwable t) {            }        });        Log.d("test", "authenticate User : " + id + "  " + pw + "  " + token);    }    private void findHue() {        HueDeviceControl deviceControl = retrofit.create(HueDeviceControl.class);        Call<ResponseBody> response = deviceControl.getIpAddress();        response.enqueue(new Callback<ResponseBody>() {            @Override            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {                if(response.isSuccessful()){                    String jsonString = "";                    try{                        jsonString = response.body().string();                        Log.d("test", "findHueIp : " + jsonString);                    }catch (IOException e){                        e.printStackTrace();                    }                   try{                       JSONArray jsonArray = new JSONArray(jsonString);                       JSONObject jsonObject;                       for(int i=0; i<jsonArray.length();i++){                           jsonObject = jsonArray.getJSONObject(i);                           ipAddress = jsonObject.getString("internalipaddress");                       }                   }catch (JSONException e){                       e.printStackTrace();                   }                    if(!ipAddress.equals("default")){                        moveAnimation(R.id.btnHueFind);                    } else {                        Toast.makeText(RegisterActivity.this, "휴 다바이스를 확인해주세요", Toast.LENGTH_SHORT).show();                    }                }            }            @Override            public void onFailure(Call<ResponseBody> call, Throwable t) {            }        });    }    private void registerHue() {        HueDeviceControl deviceControl = retrofit.create(HueDeviceControl.class);        HueRegisterBody body = new HueRegisterBody("default");        Call<ResponseBody> response = deviceControl.getUserName(ipAddress, body);        response.enqueue(new Callback<ResponseBody>() {            @Override            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {                if(response.isSuccessful()){                    String jsonString="";                    try{                        jsonString = response.body().string();                        Log.d("test", "registerHue : " + jsonString);                    }catch (IOException e){                        e.printStackTrace();                    }                    try{                        JSONArray jsonArray = new JSONArray(jsonString);                        JSONObject tempObject;                        for(int i=0; i<jsonArray.length();i++){                            tempObject = jsonArray.getJSONObject(i);                            if(tempObject.isNull("success")){                                // error 일때 휴 누르고 다시 한번 누르도록 유도                                Toast.makeText(RegisterActivity.this, "휴 버튼을 누르고 다시한번 눌러주세요", Toast.LENGTH_SHORT).show();                                ((Button) findViewById(R.id.btnHueRegister)).setText("휴 버튼을 누르고 다시한번 눌러주세요");                            }                            else{                                // success 일때 다 저장                                userName = tempObject.getJSONObject("success").getString("username");                                propertyManager.setHueIp(ipAddress);                                propertyManager.setHueName(userName);                                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);                                startActivity(intent);                                overridePendingTransition(R.anim.alpha_out, R.anim.alpha_in);                                return;                            }                        }                    }catch (JSONException e){                        e.printStackTrace();                    }                }            }            @Override            public void onFailure(Call<ResponseBody> call, Throwable t) {            }        });    }    /**     * 라즈베리 파이 등록 지정된 IP주소와 포트번호로 인증된 토큰을 보낸다     *     * @param authenticatedToken 토큰     * @return 성공여부 반환     */    private boolean registerChair(String authenticatedToken) {//        progress bar start        progressDialog.show();        boolean flag = false;        long currentTime = System.currentTimeMillis();        SocketTaskManager taskManager = new SocketTaskManager();        taskManager.execute();        taskManager.actionSend(authenticatedToken, 15000);        while (taskManager.isSuccessed() || currentTime + 15000 > System.currentTimeMillis()) {            if (taskManager.isSuccessed())                flag = true;        }        taskManager.disconnection();//        progress bar end        progressDialog.dismiss();        return flag;    }    /**     * 버튼 클릭 리스너 XML에 바로 연결되어 있다.     *     * @param v 누른 뷰를 가져온다     */    public void clickBtnListener(View v) {        Log.d("test", "clicked : " + v.getId());        progressStart();        switch (v.getId()) {            case R.id.btnRegister: //회원가입 : 서버로 토큰 전달                Log.d("test", "register");                authenticateUser(                        idEdit.getText().toString(),                        pwEdit.getText().toString(),                        propertyManager.getPushToken());                break;            case R.id.btnHueFind:                findHue();                break;            case R.id.btnHueRegister:                registerHue();                break;            default:                break;        }        progressStop();    }    private void progressStart(){        progressDialog = new ProgressDialog(mContext);        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);        progressDialog.setMessage("Wait a minute");        progressDialog.show();    }    private void progressStop(){        progressDialog.dismiss();    }}

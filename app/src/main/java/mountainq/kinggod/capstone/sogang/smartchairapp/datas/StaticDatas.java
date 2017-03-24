@@ -12,6 +12,16 @@ public class StaticDatas {
         return instance;
     }
     static {instance = new StaticDatas();}
+    public static final String BASE_URL = "http://52.231.29.193:3000/";
+    public static final String CREATE_URL = BASE_URL + "create/";
+    public static final String LOGIN_URL = BASE_URL + "login/";
+    public static final String GET_DATA_URL = BASE_URL + "getdata/";
 
+    public static final String HUE_IP_URL= "https://www.meethue.com/api/nupnp/";
+    public static final String HUE_REGISTER_URL = "/api";
+    public static final String HUE_ORDER_URL = "/lights/1/state";
+
+    public static final int MAIN_COLOR = 0xff205643;
+    private int deviceWidth, devceHeight;
 
 }

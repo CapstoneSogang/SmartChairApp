@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="mountainq.kinggod.capstone.sogang.smartchairapp">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <application
         android:name=".ApplicationController"
@@ -17,39 +17,41 @@
         android:theme="@style/AppTheme">
 
         <!--액티비티 3개로 구성-->
-        <activity android:name=".LaunchActivity"
+        <activity
+            android:name=".LaunchActivity"
             android:configChanges="layoutDirection|orientation|screenSize|mcc|mnc"
             android:screenOrientation="portrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:configChanges="layoutDirection|orientation|screenSize|mcc|mnc"
-            android:screenOrientation="portrait">
-
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-        <activity android:name=".RegisterActivity"
+        <activity
+            android:name=".MainActivity"
             android:configChanges="layoutDirection|orientation|screenSize|mcc|mnc"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:configChanges="layoutDirection|orientation|screenSize|mcc|mnc"
+            android:screenOrientation="portrait" />
 
 
         <!-- 여기부터는 서비스 부분-->
-        <service android:name=".services.ChairService"
+        <service
+            android:name=".services.ChairService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".services.FirebaseIDService"
+        <service
+            android:name=".services.FirebaseIDService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
     </application>
-<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
 </manifest>
