@@ -5,18 +5,37 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.philips.lighting.hue.sdk.PHAccessPoint;
+import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
+import com.philips.lighting.hue.sdk.PHHueSDK;
+import com.philips.lighting.hue.sdk.PHMessageType;
+import com.philips.lighting.hue.sdk.PHSDKListener;
+import com.philips.lighting.model.PHBridge;
+import com.philips.lighting.model.PHHueParsingError;
+
+import java.util.List;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.Graph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.ReceiveData;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.BarGraph;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.Graph;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.GetCordFromDB;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.LineGraph;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.PieGraph;
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueManager;
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.LOG;
 ///
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "TestDataBaseActivity";
     private DbOpenHelper mDbOpenHelper = new DbOpenHelper(this);
     private Cursor mCursor;
-    private Graph waistGraph, neckGraph, pieGraph;
+    private Graph waistGraph, neckGraph, pieGraph, barGraph;
+
     private String date = "0319";
     // private InfoClass mInfoClass;
     // private ArrayList<infoclass> mInfoArray;
@@ -29,27 +48,38 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d("???","zzzz");
-        ReceiveData receiveData = new ReceiveData();
-        receiveData.getData();
 
-
+      //  setDataBase(mDbOpenHelper);
+        GetCordFromDB getCordFromDB = new GetCordFromDB(mDbOpenHelper);
+        //getCordFromDB.getData();
+       // getCordFromDB.getCoordinate();
 
         // mDbOpenHelper = new DbOpenHelper(this);
         Log.d("insert", "zzz");
-        setDataBase(mDbOpenHelper);
+
         LineChart waistChart = (LineChart) findViewById(R.id.waist_chart);
-        waistGraph = new Graph(mDbOpenHelper,waistChart);
-        waistGraph.drawLineGraph("waist");
+        waistGraph = new LineGraph(getCordFromDB,waistChart);
+        waistGraph.drawGraph("waist");
 
         LineChart neckChart = (LineChart) findViewById(R.id.neck_chart);
-        neckGraph = new Graph(mDbOpenHelper,neckChart);
-        neckGraph.drawLineGraph("neck");
-/*
-        PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
-        pieGraph = new Graph(mDbOpenHelper, pieChart);
+        neckGraph = new LineGraph(getCordFromDB,neckChart);
+        neckGraph.drawGraph("neck");
 
-        pieGraph.drawPieGraph(date);
-*/
+        PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
+        pieGraph = new PieGraph(getCordFromDB, pieChart);
+        pieGraph.drawGraph(date);
+
+        BarChart barChartWork = (BarChart) findViewById(R.id.bar_chart_work);
+        barGraph = new BarGraph(getCordFromDB, barChartWork);
+        barGraph.drawGraph("work");
+
+        BarChart barChartPosture = (BarChart) findViewById(R.id.bar_chart_posture);
+        barGraph = new BarGraph(getCordFromDB, barChartPosture);
+        barGraph.drawGraph("posture");
+
+
+
+
 
     }
 
@@ -84,5 +114,4 @@ public class MainActivity extends AppCompatActivity {
         Log.d("insert", "zzz");
 
     }
-
 }
