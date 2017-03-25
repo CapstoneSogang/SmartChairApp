@@ -1,10 +1,11 @@
 package mountainq.kinggod.capstone.sogang.smartchairapp.HueManager;
+
+import android.util.Log;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import java.util.Scanner;
 
 
 public class hue_contoller {
@@ -12,6 +13,7 @@ public class hue_contoller {
 	static HttpConnection bridge_con;
 	static String bridge_control_addr=null;
 	static HttpConnection bridge_control_con;
+/*
 	public static void main(String [] args) throws Exception{
 	//	String username=get_username();
 	//	bridge_control_addr=bridge_addr+'/'+username;
@@ -25,32 +27,52 @@ public class hue_contoller {
 		//set_color(true,62535,200,200); // red
 		//set_color(true,23500,200,200); // green
 	}
+	*/
+	public hue_contoller(){
+		String username= null;
+		try {
+			username = get_username();
+			Log.d("username",username);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.d("test error", "e");
+		}
+		bridge_control_addr=bridge_addr+'/'+username+"/lights/2/state";
+		Log.d("bridge addr",bridge_control_addr);
+		bridge_control_con=new HttpConnection(bridge_control_addr);
+		try {
+
+			set_color(false,0,0,0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	static void set_color(boolean on, int hue, int bri, int sat) throws Exception{
 		JSONObject obj = new JSONObject();
 		obj.put("on", on);
 		obj.put("hue",hue);
 		obj.put("bri",bri);
 		obj.put("sat", sat);
-		System.out.println(obj);
+		////System.out.println(obj);
+		Log.d("test obj",obj.toString());
 		bridge_control_con.sendPut(obj.toJSONString());
 	}
 	static String get_username() throws Exception{
-		Scanner scanner = new Scanner(System.in);
 		String ip;
 		String username;
 		ip=get_ip();
-		System.out.println(ip);
+		////System.out.println(ip);
 		bridge_addr="http://"+ip+"/api";
-		System.out.println(bridge_addr);
+		////System.out.println(bridge_addr);
 		bridge_con=new HttpConnection(bridge_addr);
 		username=pushed();
 		while(username==null){
-			System.out.println("1. Press the button on the hue bridge");
-			System.out.println("2. Press enter");
-			String readString = scanner.nextLine();
+			Thread.sleep(1000);
+			Log.d("test loop","haha");
 			username=pushed();
 		}
-		System.out.println(username);
+		Log.d("test loop", "success");
+		//////System.out.println(username);
 		return username;
 	}
 	static String get_ip(){
@@ -68,9 +90,9 @@ public class hue_contoller {
 	static String pushed() throws Exception{
 		String result;
 		String param="{" + '"' + "devicetype"+'"'+':'+'"'+"my_hue_app#iphone peter"+'"'+'}';
-		System.out.println(param);
+		//////System.out.println(param);
 		result=bridge_con.sendPost(param);
-		System.out.println(result);
+		//////System.out.println(result);
 		if(result.contains("error")) return null;
 		return username_parser(result);
 	}

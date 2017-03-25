@@ -13,6 +13,7 @@ public class HttpConnection {
 		url=url_string;
 	}
 	private final String USER_AGENT = "Mozilla/5.0";
+	Thread thread = new Thread();
 
 	// HTTP GET request
 	String sendGet() throws Exception {
@@ -59,9 +60,9 @@ public class HttpConnection {
 		wr.close();
 
 		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+		//System.out.println("\nSending 'POST' request to URL : " + url);
+		//System.out.println("Post parameters : " + urlParameters);
+		//System.out.println("Response Code : " + responseCode);
 
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
@@ -94,9 +95,9 @@ public class HttpConnection {
 		wr.close();
 		
 		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
+		//System.out.println("\nSending 'POST' request to URL : " + url);
+		//System.out.println("Post parameters : " + urlParameters);
+		//System.out.println("Response Code : " + responseCode);
 
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
@@ -109,6 +110,6 @@ public class HttpConnection {
 		in.close();
 
 		//print result
-		System.out.println( response.toString());
+		//System.out.println( response.toString());
 	}
 }
