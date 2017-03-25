@@ -18,12 +18,28 @@ public class StaticDatas {
     public static final String GET_DATA_URL = BASE_URL + "getdata/";
 
     public static final String HUE_IP_URL= "https://www.meethue.com/";
-    public static final String HUE_REGISTER_URL = "/api";
-    public static final String HUE_ORDER_URL = "/lights/1/state";
+    public static final String HUE_REGISTER_URL = "/api/";
+    public static final String HUE_ORDER_URL = "/lights/1/state/";
 
     public static final String STATUS_CODE = "status";
     public static final String STATUS_USER_REGISTER = "user_register";
     public static final String STATUS_HUE_REGISTER = "hue_register";
+
+    public static final int COLOR_BASIE = 0xfffac7aa;
+    public static final int COLOR_PINK = 0xfc848e;
+    public static final int COLOR_MINT = 0xff96dbaf;
+    public static final int COLOR_BROWN = 0xffe0b593;
+    public static final int COLOR_YELLOW = 0xfff0f376;
+    public static final int COLOR_GREEN = 0xffc9e78d;
+    public static final int COLOR_BLUE = 0xffa7bbe0;
+
+    public static final int COLOR_BASIE_ALPHA = 0x4dfac7aa;
+    public static final int COLOR_PINK_ALPHA = 0x4dfc848e;
+    public static final int COLOR_MINT_ALPHA = 0x4d96dbaf;
+    public static final int COLOR_BROWN_ALPHA = 0x4de0b593;
+    public static final int COLOR_YELLOW_ALPHA = 0x4df0f376;
+    public static final int COLOR_GREEN_ALPHA = 0x4dc9e78d;
+    public static final int COLOR_BLUE_ALPHA = 0x4da7bbe0;
 
     public static final int MAIN_COLOR = 0xff205643;
     private int deviceWidth, devceHeight;

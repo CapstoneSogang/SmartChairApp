@@ -15,18 +15,13 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.HueManager.ThreadHue;
 import mountainq.kinggod.capstone.sogang.smartchairapp.MainActivity;
 import mountainq.kinggod.capstone.sogang.smartchairapp.R;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.HueColor;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
 import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HueDeviceControl;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.PropertyManager;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.RegisterTask;
 
 /**
  * Created by dnay2 on 2017-03-19.
@@ -41,13 +36,14 @@ public class ChairService extends FirebaseMessagingService {
 
     PropertyManager propertyManager = PropertyManager.getInstance();
 
-    HueDeviceControl deviceControl;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         showNotification(remoteMessage.getData());
-        changHueLight(Integer.parseInt(remoteMessage.getData().get("integerKey")));
+        Log.d("test", "received message : " + remoteMessage.getData().toString());
     }
+
+
 
     private void showNotification(Map<String, String> data) {
         int code = Integer.parseInt(data.get("code"));
@@ -64,8 +60,9 @@ public class ChairService extends FirebaseMessagingService {
             case TURN_OFF:
                 break;
         }
-        NotificationCompat.Builder builder = buildSimpleNotification("", "", "Hello Hue", data.get("message"));
-        builder.build();
+        NotificationCompat.Builder builder = buildSimpleNotification("", "", "Hello Hue", message);
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(1, builder.build());
     }
 
     private void showNotification(String message) {
@@ -105,7 +102,7 @@ public class ChairService extends FirebaseMessagingService {
         intent.putExtra("idx", idx);
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(MainActivity.class);
+        stackBuilder.addParentStack(LaunchActivity.class);
         stackBuilder.addNextIntent(intent);
 
         return stackBuilder.getPendingIntent(
@@ -114,7 +111,7 @@ public class ChairService extends FirebaseMessagingService {
         );
     }
 
-    public void changHueLight(final int code) {
+    public void changeHueLight(final int code) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("")

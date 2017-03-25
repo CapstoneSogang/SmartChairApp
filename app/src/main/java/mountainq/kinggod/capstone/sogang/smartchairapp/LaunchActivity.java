@@ -30,10 +30,13 @@ public class LaunchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
         Log.d("test", "launch task");
-
-        if(manager.getUserToken().equals("default"))
+        Log.d("test", "userToken : " + manager.getUserToken() + "\n" +
+        "hue IP : " + manager.getHueIp() + "\n" +
+        "hue Name : " + manager.getHueName() + "\n" +
+        "pushToken : " + manager.getPushToken());
+        if(!manager.getUserToken().equals("default"))
             new LaunchTask().execute(FIRST_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
-        else if (manager.getHueIp().equals("default") || manager.getHueName().equals("default"))
+        else if (!manager.getHueIp().equals("default") || !manager.getHueName().equals("default"))
             new LaunchTask().execute(SECOND_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
         else
             new LaunchTask().execute(MAIN_LAUNCH, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
@@ -43,17 +46,10 @@ public class LaunchActivity extends AppCompatActivity {
 
     private class LaunchTask extends AsyncTask<Integer, Integer, Void> {
 
-        private int runTime = 0;
-        private int interval = 0;
-        private int staticInterval = 0;
-
         @Override
         protected Void doInBackground(Integer... params) {
             Intent intent = getNext(params[0]);
-            long preTime = System.currentTimeMillis();
-            runTime = params[1];
-            staticInterval = interval = params[2];
-            int value = 0;
+
             Log.d("test", "execute");
 
             SystemClock.sleep(3000);
@@ -61,13 +57,6 @@ public class LaunchActivity extends AppCompatActivity {
             finish();
             return null;
         }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-
-        }
-
         private Intent getNext(int code){
             Intent intent = null;
             switch (code){

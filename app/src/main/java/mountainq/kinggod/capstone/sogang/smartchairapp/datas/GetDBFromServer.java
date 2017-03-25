@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.GetCordFromDB;
 import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HTTPInterface;
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.RegisterTask;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -145,5 +146,49 @@ public class GetDBFromServer {
 
         Log.d("insert", "zzz");
 
+    }
+
+
+    private class DataTask extends RegisterTask{
+
+        private String token;
+
+        public DataTask(String token) {
+            this.token = token;
+        }
+
+        @Override
+        protected Integer doInBackground(Integer... params) {
+            JSONObject jsonObject = new JSONObject();
+            try{
+                jsonObject.put("token", token);
+            }catch (JSONException e){
+                e.printStackTrace();
+            }
+
+            String jsonBody = jsonObject.toString();
+            try{
+                String result = postMethod(StaticDatas.LOGIN_URL, jsonBody);
+                if(result != null){
+                    try{
+                        JSONArray array = new JSONArray(result);
+                        JSONObject temp;
+                        for(int i=0;i<array.length();i++){
+                            temp = array.getJSONObject(i);
+                            String date = temp.getString("");
+                            String time = temp.getString("");
+                            String sensor1 = temp.getString("");
+                            String sensor2 = temp.getString("");
+
+                        }
+                    }catch (JSONException e){
+                        e.printStackTrace();
+                    }
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            return super.doInBackground(params);
+        }
     }
 }

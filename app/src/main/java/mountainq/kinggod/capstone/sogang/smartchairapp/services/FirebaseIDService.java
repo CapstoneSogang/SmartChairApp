@@ -31,7 +31,7 @@ public class FirebaseIDService extends FirebaseInstanceIdService {
         Log.d(TAG, "Refreshed token : " + refreshedToken);
         app = (ApplicationController) getApplicationContext();
         propertyManager.setPushToken(refreshedToken);
-//        app.setToken(refreshedToken);
+        Log.d(TAG, "new token saved");
 
         //TODO: Implement this method to send any registration to your app's servers
 
