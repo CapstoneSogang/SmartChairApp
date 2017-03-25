@@ -11,5 +11,7 @@
     <color name="colorYellow">#f0f376</color>
     <color name="colorGreen">#c9e78d</color>
     <color name="colorBlue">#a7bbe0</color>
+
+    <color name="colorText">#232323</color>
     <!-- opacity : 30% -->
 </resources>

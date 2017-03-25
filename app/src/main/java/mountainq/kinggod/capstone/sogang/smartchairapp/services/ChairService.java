@@ -1,8 +1,10 @@
 package mountainq.kinggod.capstone.sogang.smartchairapp.services;
 
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -15,13 +17,12 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
+import mountainq.kinggod.capstone.sogang.smartchairapp.HueManager.ThreadHue;
+import mountainq.kinggod.capstone.sogang.smartchairapp.LaunchActivity;
 import mountainq.kinggod.capstone.sogang.smartchairapp.MainActivity;
 import mountainq.kinggod.capstone.sogang.smartchairapp.R;
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.HueColor;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
-import mountainq.kinggod.capstone.sogang.smartchairapp.interfaces.HueDeviceControl;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.PropertyManager;
-import mountainq.kinggod.capstone.sogang.smartchairapp.managers.RegisterTask;
 
 /**
  * Created by dnay2 on 2017-03-19.
@@ -47,7 +48,7 @@ public class ChairService extends FirebaseMessagingService {
 
     private void showNotification(Map<String, String> data) {
         int code = Integer.parseInt(data.get("code"));
-        changHueLight(code);
+        changeHueLight(code);
         String message = "default";
         String title = "title";
         switch (code){
@@ -75,7 +76,7 @@ public class ChairService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_name)
-                .setColor(StaticDatas.MAIN_COLOR)
+                .setColor(StaticDatas.COLOR_MAIN)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -86,7 +87,7 @@ public class ChairService extends FirebaseMessagingService {
                 .setContentIntent(getPendingIntent(code, idx));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder.setCategory(Notification.CATEGORY_MESSAGE)
-                    .setColor(StaticDatas.MAIN_COLOR)
+                    .setColor(StaticDatas.COLOR_MAIN)
                     .setSmallIcon(R.drawable.ic_stat_name)
                     .setPriority(Notification.PRIORITY_HIGH)
                     .setVisibility(Notification.VISIBILITY_PUBLIC);
@@ -113,12 +114,6 @@ public class ChairService extends FirebaseMessagingService {
 
     public void changeHueLight(final int code) {
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("")
-                .build();
-        deviceControl = retrofit.create(HueDeviceControl.class);
-
-        HueColor query = null;
         ThreadHue colorThread = new ThreadHue();
         //colorThread.setThreadColor(true,62535,200,200);
         colorThread.start();
@@ -150,27 +145,6 @@ public class ChairService extends FirebaseMessagingService {
                 break;
         }
 
-        if(query == null) return;
-
-        Call<ResponseBody> request = deviceControl.changeColor(
-                propertyManager.getHueIp(),
-                propertyManager.getHueName(),
-                query
-        );
-
-        request.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
-                    Log.d("test", "successful");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
     }
 
 }

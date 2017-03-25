@@ -17,6 +17,8 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
+
 /**
  * Created by jwahn37 on 2017. 3. 23..
  */
@@ -53,14 +55,14 @@ public class LineGraph extends Graph {
         dataSet.setCubicIntensity(0.2f);
         //dataSet.setDrawFilled(true);
         dataSet.setDrawCircles(false);
-        dataSet.setLineWidth(1.8f);
+        dataSet.setLineWidth(4f);
         dataSet.setCircleRadius(1f);
         dataSet.setCircleColor(Color.BLUE);
-        dataSet.setHighLightColor(Color.rgb(244, 117, 117));
-        dataSet.setColor(Color.BLACK);
-        dataSet.setFillColor(Color.rgb(244, 117, 117));
+        dataSet.setHighLightColor(StaticDatas.COLOR_PINK);
+        dataSet.setColor(StaticDatas.COLOR_PINK);
+        dataSet.setFillColor(StaticDatas.COLOR_PINK_ALPHA);
         dataSet.setDrawFilled(true);
-        dataSet.setFillAlpha(100);
+//        dataSet.setFillAlpha(30);
         //dataSet.setDrawHorizontalHighlightIndicator(false);
         dataSet.setFillFormatter(new IFillFormatter() {
             @Override
@@ -123,6 +125,8 @@ public class LineGraph extends Graph {
 
         chart.setDrawGridBackground(false);
         chart.setMaxHighlightDistance(300);
+
+        chart.setBackgroundColor(StaticDatas.COLOR_BACKGROUND);
 
         chart.setData(data);
 

@@ -26,7 +26,7 @@ public class StaticDatas {
     public static final String STATUS_HUE_REGISTER = "hue_register";
 
     public static final int COLOR_BASIE = 0xfffac7aa;
-    public static final int COLOR_PINK = 0xfc848e;
+    public static final int COLOR_PINK = 0xfffc848e;
     public static final int COLOR_MINT = 0xff96dbaf;
     public static final int COLOR_BROWN = 0xffe0b593;
     public static final int COLOR_YELLOW = 0xfff0f376;
@@ -41,7 +41,28 @@ public class StaticDatas {
     public static final int COLOR_GREEN_ALPHA = 0x4dc9e78d;
     public static final int COLOR_BLUE_ALPHA = 0x4da7bbe0;
 
-    public static final int MAIN_COLOR = 0xff205643;
+    public static final int[] COLOR_ARRAY= {
+            COLOR_BROWN,
+            COLOR_PINK,
+            COLOR_MINT,
+            COLOR_YELLOW,
+            COLOR_BASIE,
+            COLOR_GREEN,
+            COLOR_BLUE,
+    };
+
+    public static final int[] COLOR_ARRAY2 = {
+            COLOR_BASIE,
+            COLOR_PINK,
+            COLOR_MINT,
+            COLOR_BROWN,
+            COLOR_YELLOW,
+            COLOR_GREEN,
+            COLOR_BLUE,
+    };
+
+    public static final int COLOR_MAIN = 0xff205643;
+    public static final int COLOR_BACKGROUND = 0xffededed;
     private int deviceWidth, devceHeight;
 
 }
