@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MainTextView">
+        <item name="android:layout_marginTop">30dp</item>
+    </style>
+
 </resources>

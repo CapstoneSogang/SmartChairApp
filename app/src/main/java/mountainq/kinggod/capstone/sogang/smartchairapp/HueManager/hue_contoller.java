@@ -7,6 +7,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import mountainq.kinggod.capstone.sogang.smartchairapp.RegisterActivity;
+
 
 public class hue_contoller {
 	static String bridge_addr=null;

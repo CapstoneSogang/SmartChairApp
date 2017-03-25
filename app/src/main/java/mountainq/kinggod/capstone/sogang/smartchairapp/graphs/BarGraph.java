@@ -10,9 +10,10 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
 
 /**
  * Created by jwahn37 on 2017. 3. 23..
@@ -41,6 +42,7 @@ public class BarGraph extends Graph {
 
         barChart.setDrawGridBackground(false);
         // barChart.setDrawYLabels(false);
+        barChart.setTouchEnabled(false);
 
         //IAxisValueFormatter xAxisFormatter = new DayAxisValueFormatter(barChart);
 
@@ -175,7 +177,8 @@ public class BarGraph extends Graph {
 
             // set1.setDrawIcons(false);
 
-            set1.setColors(ColorTemplate.MATERIAL_COLORS);
+            set1.setColors(StaticDatas.COLOR_ARRAY2);
+
 
             ArrayList<IBarDataSet> dataSets = new ArrayList<IBarDataSet>();
             dataSets.add(set1);

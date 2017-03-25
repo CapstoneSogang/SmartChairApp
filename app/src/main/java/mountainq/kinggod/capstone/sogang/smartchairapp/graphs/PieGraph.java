@@ -11,6 +11,8 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
 
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
+
 /**
  * Created by jwahn37 on 2017. 3. 23..
  */
@@ -31,9 +33,9 @@ public class PieGraph extends Graph {
         //pieChart.setCenterText(generateCenterSpannableText());
 
         pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.WHITE);
+        pieChart.setHoleColor(Color.TRANSPARENT);
 
-        pieChart.setTransparentCircleColor(Color.WHITE);
+        pieChart.setTransparentCircleColor(StaticDatas.COLOR_BACKGROUND);
         pieChart.setTransparentCircleAlpha(110);
 
         pieChart.setHoleRadius(58f);
@@ -44,7 +46,7 @@ public class PieGraph extends Graph {
         pieChart.setRotationAngle(0);
         // enable rotation of the chart by touch
         pieChart.setRotationEnabled(true);
-        pieChart.setHighlightPerTapEnabled(true);
+        pieChart.setHighlightPerTapEnabled(false);
 
         // pieChart.setUnit(" €");
         // pieChart.setDrawUnitsInChart(true);
@@ -77,14 +79,16 @@ public class PieGraph extends Graph {
 
         //dataSet.setDrawIcons(false);
 
-        dataSet.setSliceSpace(3f);
+        dataSet.setSliceSpace(5f);
         //dataSet.setIconsOffset(new MPPointF(0, 40));
         dataSet.setSelectionShift(5f);
+        dataSet.setColors(StaticDatas.COLOR_ARRAY);
 
         PieData data = new PieData(dataSet);
         data.setValueFormatter(new PercentFormatter());
         data.setValueTextSize(11f);
         data.setValueTextColor(Color.WHITE);
+
         // data.setValueTypeface(mTfLight);
         pieChart.setData(data);
 
