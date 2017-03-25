@@ -7,29 +7,51 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import mountainq.kinggod.capstone.sogang.smartchairapp.RegisterActivity;
+
 
 public class hue_contoller {
 	static String bridge_addr=null;
 	static HttpConnection bridge_con;
 	static String bridge_control_addr=null;
 	static HttpConnection bridge_control_con;
-/*
-	public static void main(String [] args) throws Exception{
-	//	String username=get_username();
-	//	bridge_control_addr=bridge_addr+'/'+username;
-		
-		bridge_control_addr="http://192.168.219.152/api/v7NniwM9vf0Cabgoi-ZWdbCoUk3ox6USuOl9FhWK/lights/2/state";
-		bridge_control_con=new HttpConnection(bridge_control_addr);
-		//param="{"+'"'+"on"+'"'+':'+"true"+", "+'"'+"sat"+'"'+':'+"254"+", "+'"'+"bri"+'"'+':'+"20"+","+'"'
-		//				+"hue"+'"'+':'+"10000"+"}";
-		//set_color(false,0,0,0); //turn off
-		//set_color(true,0,200,0);//turn on
-		//set_color(true,62535,200,200); // red
-		//set_color(true,23500,200,200); // green
+	static RegisterActivity registerActivity;
+
+	static String username;
+	/*
+        public static void main(String [] args) throws Exception{
+        //	String username=get_username();
+        //	bridge_control_addr=bridge_addr+'/'+username;
+
+            bridge_control_addr="http://192.168.219.152/api/v7NniwM9vf0Cabgoi-ZWdbCoUk3ox6USuOl9FhWK/lights/2/state";
+            bridge_control_con=new HttpConnection(bridge_control_addr);
+            //param="{"+'"'+"on"+'"'+':'+"true"+", "+'"'+"sat"+'"'+':'+"254"+", "+'"'+"bri"+'"'+':'+"20"+","+'"'
+            //				+"hue"+'"'+':'+"10000"+"}";
+            //set_color(false,0,0,0); //turn off
+            //set_color(true,0,200,0);//turn on
+            //set_color(true,62535,200,200); // red
+            //set_color(true,23500,200,200); // green
+        }
+        */
+	public hue_contoller(RegisterActivity registerActivity){
+
+		this.registerActivity=registerActivity;
 	}
-	*/
-	public hue_contoller(){
-		String username= null;
+	public void controlHue(boolean on, int hue, int bri, int sat )
+	{
+		bridge_control_addr=bridge_addr+'/'+username+"/lights/2/state";
+		bridge_control_con=new HttpConnection(bridge_control_addr);
+		try {
+			set_color(on,hue,bri,sat);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	public void registerHue()
+	{
+		username= null;
 		try {
 			username = get_username();
 			Log.d("username",username);
@@ -43,11 +65,28 @@ public class hue_contoller {
 		try {
 
 			set_color(false,0,0,0);
+			registerActivity.hueConnected=1;
+			Log.d("here","hueconnected");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		/*
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+            set_color(true,62535,200,200);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        */
+
 	}
-	static void set_color(boolean on, int hue, int bri, int sat) throws Exception{
+
+
+	public static void set_color(boolean on, int hue, int bri, int sat) throws Exception{
 		JSONObject obj = new JSONObject();
 		obj.put("on", on);
 		obj.put("hue",hue);
@@ -56,6 +95,7 @@ public class hue_contoller {
 		////System.out.println(obj);
 		Log.d("test obj",obj.toString());
 		bridge_control_con.sendPut(obj.toJSONString());
+		Log.d("test obj","fin");
 	}
 	static String get_username() throws Exception{
 		String ip;
@@ -81,7 +121,7 @@ public class hue_contoller {
 		HttpConnection http=new HttpConnection("https://www.meethue.com/api/nupnp");
 		try {
 			s=http.sendGet();
-	        ip=ip_parser(s);
+			ip=ip_parser(s);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,22 +138,25 @@ public class hue_contoller {
 	}
 	static String ip_parser(String input) throws ParseException{
 		String result;
+
+
+
 		JSONParser parser = new JSONParser();
 		Object obj = parser.parse(input);
-        JSONArray array = (JSONArray)obj;
-        JSONObject obj2 = (JSONObject)array.get(0);
-        result=(String) obj2.get("internalipaddress");
-        return result;
+		JSONArray array = (JSONArray)obj;
+		JSONObject obj2 = (JSONObject)array.get(0);
+		result=(String) obj2.get("internalipaddress");
+		return result;
 	}
 	static String username_parser(String input) throws ParseException{
 		String result;
 		JSONParser parser = new JSONParser();
 		Object obj = parser.parse(input);
-        JSONArray array = (JSONArray)obj;
-        JSONObject obj2 = (JSONObject)array.get(0);
-        JSONObject obj3 = (JSONObject)obj2.get("success");
-        result=(String)obj3.get("username");
-        return result;
+		JSONArray array = (JSONArray)obj;
+		JSONObject obj2 = (JSONObject)array.get(0);
+		JSONObject obj3 = (JSONObject)obj2.get("success");
+		result=(String)obj3.get("username");
+		return result;
 	}
-	
+
 }
