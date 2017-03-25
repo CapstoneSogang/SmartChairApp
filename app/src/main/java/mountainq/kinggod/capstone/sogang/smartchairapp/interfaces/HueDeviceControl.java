@@ -19,7 +19,7 @@ public interface HueDeviceControl {
     /*
     해당하는 ip주소와 username으로 변화명령 던짐
      */
-    @PUT("{ip}/api/{username}/lights/1/state")
+    @PUT("api/{username}/lights/1/state")
     Call<ResponseBody> changeColor(@Path("ip") String ipAddress,
                                    @Path("username") String username,
                                    @Body HueColor hueColor);
@@ -27,7 +27,7 @@ public interface HueDeviceControl {
     /*
     해당하는 ip 주소로 요청을 보내서 얻어내는 것
      */
-    @POST("{ip}/api")
+    @POST("api")
     Call<ResponseBody> getUserName(@Path("ip") String ipAddress,
                                    @Body HueRegisterBody hueRegisterBody);
 
@@ -35,7 +35,7 @@ public interface HueDeviceControl {
     /*
     주변의 휴디바이스 ip address 얻어오기
      */
-    @GET("https://www.meethue.com/api/nupnp")
+    @GET("api/nupnp")
     Call<ResponseBody> getIpAddress();
 
 }

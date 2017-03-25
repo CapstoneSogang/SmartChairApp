@@ -17,7 +17,7 @@ public class StaticDatas {
     public static final String LOGIN_URL = BASE_URL + "login/";
     public static final String GET_DATA_URL = BASE_URL + "getdata/";
 
-    public static final String HUE_IP_URL= "https://www.meethue.com/api/nupnp/";
+    public static final String HUE_IP_URL= "https://www.meethue.com/";
     public static final String HUE_REGISTER_URL = "/api";
     public static final String HUE_ORDER_URL = "/lights/1/state";
 
