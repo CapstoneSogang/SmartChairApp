@@ -8,26 +8,13 @@ import android.util.Log;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.philips.lighting.hue.sdk.PHAccessPoint;
-import com.philips.lighting.hue.sdk.PHBridgeSearchManager;
-import com.philips.lighting.hue.sdk.PHHueSDK;
-import com.philips.lighting.hue.sdk.PHMessageType;
-import com.philips.lighting.hue.sdk.PHSDKListener;
-import com.philips.lighting.model.PHBridge;
-import com.philips.lighting.model.PHHueParsingError;
-
-import java.util.List;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.Graph;
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.ReceiveData;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.BarGraph;
-import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.Graph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.GetCordFromDB;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.Graph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.LineGraph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.PieGraph;
-import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueManager;
-import mountainq.kinggod.capstone.sogang.smartchairapp.managers.LOG;
 ///
 public class MainActivity extends AppCompatActivity {
 

@@ -143,6 +143,7 @@ public class ChairService extends FirebaseMessagingService {
                 propertyManager.getHueName(),
                 query
         );
+
         request.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

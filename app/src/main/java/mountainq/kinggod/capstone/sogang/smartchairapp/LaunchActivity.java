@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.PropertyManager;
 
 /**
@@ -16,8 +17,9 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.managers.PropertyManager;
 
 public class LaunchActivity extends AppCompatActivity {
 
-    private static final int FIRST_TIME = 100; //처음 쓰는 경우
-    private static final int SECOND_TIME = 200; //두번째 쓰는 경우
+    private static final int FIRST_TIME = 100; //처음 쓰는 경우 : 아이디 인증 전
+    private static final int SECOND_TIME = 200; //두번째 쓰는 경우 : 휴 디바이스 없는 경우
+    private static final int MAIN_LAUNCH = 300; // 메인 호출
 
     private static final int DEFAULT_RUNTIME = 5000;
     private static final int DEFAULT_INTERVAL = 1000;
@@ -29,19 +31,15 @@ public class LaunchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_launch);
         Log.d("test", "launch task");
 
-//        new LaunchTask().execute(FIRST_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
-        if(!checkToken())
+        if(manager.getUserToken().equals("default"))
             new LaunchTask().execute(FIRST_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
-        else
+        else if (manager.getHueIp().equals("default") || manager.getHueName().equals("default"))
             new LaunchTask().execute(SECOND_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
+        else
+            new LaunchTask().execute(MAIN_LAUNCH, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
 
-//        Intent intent = new Intent(LaunchActivity.this, RegisterActivity.class);
-//        startActivity(intent);
     }
 
-    private boolean checkToken() {
-        return manager.getPushToken().equals("default") && manager.getUserToken().equals("default");
-    }
 
     private class LaunchTask extends AsyncTask<Integer, Integer, Void> {
 
@@ -58,14 +56,6 @@ public class LaunchActivity extends AppCompatActivity {
             int value = 0;
             Log.d("test", "execute");
 
-//            while (interval < runTime) {
-//                if(preTime - System.currentTimeMillis() > staticInterval){
-//                    interval += interval;
-//                    //애니메이션 같은거 여기다 두면댐
-//                    publishProgress(++value);
-//                }
-//
-//            }
             SystemClock.sleep(3000);
             startActivity(intent);
             finish();
@@ -79,13 +69,22 @@ public class LaunchActivity extends AppCompatActivity {
         }
 
         private Intent getNext(int code){
+            Intent intent = null;
             switch (code){
                 case FIRST_TIME:
-                    return new Intent(LaunchActivity.this, RegisterActivity.class);
+                    intent = new Intent(LaunchActivity.this, RegisterActivity.class);
+                    intent.putExtra(StaticDatas.STATUS_CODE, StaticDatas.STATUS_USER_REGISTER);
+                    break;
                 case SECOND_TIME:
-                    return new Intent(LaunchActivity.this, MainActivity.class);
+                    intent = new Intent(LaunchActivity.this, MainActivity.class);
+                    intent.putExtra(StaticDatas.STATUS_CODE, StaticDatas.STATUS_HUE_REGISTER);
+                    break;
+                case MAIN_LAUNCH:
+                    intent = new Intent(LaunchActivity.this, MainActivity.class);
+                    break;
             }
-            return null;
+
+            return intent;
         }
     }
 

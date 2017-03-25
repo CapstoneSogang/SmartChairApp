@@ -7,10 +7,10 @@
     android:padding="15dp">
 
     <LinearLayout
-        android:padding="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,13 +63,26 @@
         android:padding="10dp">
 
         <Button
+            android:id="@+id/btnLogin"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_rectangle_noradius"
             android:onClick="clickBtnListener"
+            android:text="LOG IN" />
+
+        <Button
             android:id="@+id/btnRegister"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@drawable/btn_rectangle_noradius"
+            android:onClick="clickBtnListener"
             android:text="REGISTER" />
+
+
     </LinearLayout>
 
 

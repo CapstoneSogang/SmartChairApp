@@ -21,6 +21,10 @@ public class StaticDatas {
     public static final String HUE_REGISTER_URL = "/api";
     public static final String HUE_ORDER_URL = "/lights/1/state";
 
+    public static final String STATUS_CODE = "status";
+    public static final String STATUS_USER_REGISTER = "user_register";
+    public static final String STATUS_HUE_REGISTER = "hue_register";
+
     public static final int MAIN_COLOR = 0xff205643;
     private int deviceWidth, devceHeight;
 
