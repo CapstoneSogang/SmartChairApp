@@ -62,9 +62,10 @@ public class hue_contoller {
 		bridge_control_addr=bridge_addr+'/'+username+"/lights/2/state";
 		Log.d("bridge addr",bridge_control_addr);
 		bridge_control_con=new HttpConnection(bridge_control_addr);
+
 		try {
 
-			set_color(false,0,0,0);
+			//set_color(false,0,0,0);
 			registerActivity.hueConnected=1;
 			Log.d("here","hueconnected");
 		} catch (Exception e) {
@@ -104,7 +105,9 @@ public class hue_contoller {
 		//////System.out.println(username);
 		return username;
 	}
+
 	static String get_ip(){
+		//Log.d("here is error","error1");
 		String ip = null,s;
 		JSONParser parser = new JSONParser();
 		HttpConnection http=new HttpConnection("https://www.meethue.com/api/nupnp");
@@ -113,6 +116,7 @@ public class hue_contoller {
 			ip=ip_parser(s);
 		} catch (Exception e) {
 			e.printStackTrace();
+		//	Log.d("here is error","error1");
 		}
 		return ip;
 	}
@@ -137,6 +141,8 @@ public class hue_contoller {
 		result=(String) obj2.get("internalipaddress");
 		return result;
 	}
+
+
 	static String username_parser(String input) throws ParseException{
 		String result;
 		JSONParser parser = new JSONParser();

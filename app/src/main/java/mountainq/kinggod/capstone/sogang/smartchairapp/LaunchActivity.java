@@ -34,9 +34,10 @@ public class LaunchActivity extends AppCompatActivity {
         "hue IP : " + manager.getHueIp() + "\n" +
         "hue Name : " + manager.getHueName() + "\n" +
         "pushToken : " + manager.getPushToken());
-        if(!manager.getUserToken().equals("default"))
+
+        if(manager.getUserToken().equals("default"))
             new LaunchTask().execute(FIRST_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
-        else if (!manager.getHueIp().equals("default") || !manager.getHueName().equals("default"))
+        else if (manager.getHueIp().equals("default") || manager.getHueName().equals("default"))
             new LaunchTask().execute(SECOND_TIME, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
         else
             new LaunchTask().execute(MAIN_LAUNCH, DEFAULT_RUNTIME, DEFAULT_INTERVAL);
@@ -65,7 +66,7 @@ public class LaunchActivity extends AppCompatActivity {
                     intent.putExtra(StaticDatas.STATUS_CODE, StaticDatas.STATUS_USER_REGISTER);
                     break;
                 case SECOND_TIME:
-                    intent = new Intent(LaunchActivity.this, MainActivity.class);
+                    intent = new Intent(LaunchActivity.this, RegisterActivity.class);
                     intent.putExtra(StaticDatas.STATUS_CODE, StaticDatas.STATUS_HUE_REGISTER);
                     break;
                 case MAIN_LAUNCH:
