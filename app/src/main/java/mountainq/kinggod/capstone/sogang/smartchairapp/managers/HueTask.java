@@ -15,7 +15,7 @@ import java.io.IOException;
 public class HueTask extends RegisterTask {
     private static final String HUE_FIND = "https://www.meethue.com/api/nupnp";
     private static final String HTTP = "http://";
-    private static final String HUE_REGISTER = "/api";
+    private static final String HUE_REGISTER = "/api/";
     private static final String HUE_ORDER = "/lights/2/state";
 
     public static final int FIND = 100;
@@ -31,12 +31,25 @@ public class HueTask extends RegisterTask {
     private int order;
     private String ipAddress;
 
+    private static boolean wait =false;
+
     public HueTask(int order) {
         this.order = order;
     }
 
     @Override
     protected Integer doInBackground(Integer... params) {
+
+        while(wait) //여러thread가 동시에 겹치는거 방지
+        {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        wait=true;
+        Log.d("start","ha");
         JSONObject jsonObject = new JSONObject();
         try {
             switch (order) {
@@ -48,15 +61,15 @@ public class HueTask extends RegisterTask {
                     break;
                 case ORDER_RED:
                     jsonObject.put("on", true);
-                    jsonObject.put("sat", 62535);
+                    jsonObject.put("sat", 200);
                     jsonObject.put("bri", 200);
-                    jsonObject.put("hue", 200);
+                    jsonObject.put("hue", 62535);
                     break;
                 case ORDER_GREEN:
                     jsonObject.put("on", true);
-                    jsonObject.put("sat", 23500);
+                    jsonObject.put("sat", 200);
                     jsonObject.put("bri", 200);
-                    jsonObject.put("hue", 200);
+                    jsonObject.put("hue", 23500);
                     break;
                 case ORDER_TURN_ON:
                     jsonObject.put("on", true);
@@ -140,7 +153,24 @@ public class HueTask extends RegisterTask {
                     }while(notFin);
 
                     break;
-                case ORDER_RED:
+
+                case ORDER_RED: if(DEBUG_MODE){
+                    propertyManager.setHueIp("success");
+                    propertyManager.setHueName("success");
+                }
+                    if(propertyManager.getHueIp().equals("default") || propertyManager.getHueName().equals("default")){
+                        Log.e("test", "we did not register hue device not yet");
+                        return null;
+                    }
+                    Log.d("turnoff",HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER);
+                    Log.d("body",jsonBody);
+                    result = putMethod(HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER
+                            , "", jsonBody);
+                    //result = getMethod()
+
+                    if (result != null) {
+                        Log.d("test", result);
+                    }
                 case ORDER_GREEN:
                 case ORDER_TURN_ON:
                 case ORDER_TURN_OFF:
@@ -167,8 +197,8 @@ public class HueTask extends RegisterTask {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
+        Log.d("fin","ha");
+        wait=false;
         return super.doInBackground(params);
     }
 }

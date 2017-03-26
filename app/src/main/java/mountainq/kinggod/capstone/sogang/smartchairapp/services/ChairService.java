@@ -22,6 +22,7 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.LaunchActivity;
 import mountainq.kinggod.capstone.sogang.smartchairapp.MainActivity;
 import mountainq.kinggod.capstone.sogang.smartchairapp.R;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.HueTask;
 import mountainq.kinggod.capstone.sogang.smartchairapp.managers.PropertyManager;
 
 /**
@@ -135,27 +136,31 @@ public class ChairService extends FirebaseMessagingService {
 
         switch (code) {
             case RED:
+                new HueTask(HueTask.ORDER_RED).execute();
                 //query = new HueColor(true, 0, 0, 0);
                 //ThreadHue threadHue = new ThreadHue();
-                colorThread.setThreadColor(true,62535,200,200);
+                //colorThread.setThreadColor(true,62535,200,200);
                 //threadHue.start();
                 //threadHue.stop();
                 break;
             case GREEN:
-               // ThreadHue threadHue1 = new ThreadHue();
-                colorThread.setThreadColor(true,23500,200,200);
+                new HueTask(HueTask.ORDER_GREEN).execute();
+                // ThreadHue threadHue1 = new ThreadHue();
+                //colorThread.setThreadColor(true,23500,200,200);
                 //threadHue1.start();
                 //query = new HueColor(true, 0, 0, 0);
                 break;
             case TURN_ON:
-             //   ThreadHue threadHue2 = new ThreadHue();
-                colorThread.setThreadColor(true,0,200,0);
+                new HueTask(HueTask.ORDER_TURN_ON).execute();
+                //   ThreadHue threadHue2 = new ThreadHue();
+              //  colorThread.setThreadColor(true,0,200,0);
               //  threadHue2.start();
                 //query = new HueColor(true, 0, 0, 0);
                 break;
             case TURN_OFF:
           //      ThreadHue threadHue3 = new ThreadHue();
-                colorThread.setThreadColor(false,0,0,0);
+                new HueTask(HueTask.ORDER_TURN_OFF).execute();
+                //  colorThread.setThreadColor(false,0,0,0);
             //    threadHue3.start();
                 //query = new HueColor(true, 0, 0, 0);
                 break;
