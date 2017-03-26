@@ -36,12 +36,30 @@ public class ChairService extends FirebaseMessagingService {
     private static final int TURN_OFF = 4;
 
     PropertyManager propertyManager = PropertyManager.getInstance();
+    ThreadHue colorThread;
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        colorThread = new ThreadHue();
+        //colorThread.setThreadColor(true,62535,200,200);
+        colorThread.start();
+
+    }
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         showNotification(remoteMessage.getData());
         Log.d("test", "received message : " + remoteMessage.getData().toString());
+        /*
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+        t.start();
+        */
     }
 
 
@@ -114,9 +132,7 @@ public class ChairService extends FirebaseMessagingService {
 
     public void changeHueLight(final int code) {
 
-        ThreadHue colorThread = new ThreadHue();
-        //colorThread.setThreadColor(true,62535,200,200);
-        colorThread.start();
+
         switch (code) {
             case RED:
                 //query = new HueColor(true, 0, 0, 0);
