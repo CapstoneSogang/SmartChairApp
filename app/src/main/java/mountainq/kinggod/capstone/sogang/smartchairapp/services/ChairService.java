@@ -17,7 +17,6 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.HueManager.ThreadHue;
 import mountainq.kinggod.capstone.sogang.smartchairapp.LaunchActivity;
 import mountainq.kinggod.capstone.sogang.smartchairapp.MainActivity;
 import mountainq.kinggod.capstone.sogang.smartchairapp.R;
@@ -37,14 +36,12 @@ public class ChairService extends FirebaseMessagingService {
     private static final int TURN_OFF = 4;
 
     PropertyManager propertyManager = PropertyManager.getInstance();
-    ThreadHue colorThread;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
-        colorThread = new ThreadHue();
-        //colorThread.setThreadColor(true,62535,200,200);
-        colorThread.start();
+
 
     }
 
@@ -72,15 +69,23 @@ public class ChairService extends FirebaseMessagingService {
         String title = "title";
         switch (code){
             case RED:
+                title = "RED";
+                message = "자세를 바로 하세요";
                 break;
             case GREEN:
+                title = "GREEN";
+                message = "좋은 자세 입니다";
                 break;
             case TURN_ON:
+                title = "LIGHT ON";
+                message = "일을 시작합니다";
                 break;
             case TURN_OFF:
+                title = "LIGHT OFF";
+                message = "일을 끝냅니다";
                 break;
         }
-        NotificationCompat.Builder builder = buildSimpleNotification("", "", "Hello Hue", message);
+        NotificationCompat.Builder builder = buildSimpleNotification("", "", title, message);
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(1, builder.build());
     }
@@ -137,32 +142,19 @@ public class ChairService extends FirebaseMessagingService {
         switch (code) {
             case RED:
                 new HueTask(HueTask.ORDER_RED).execute();
-                //query = new HueColor(true, 0, 0, 0);
-                //ThreadHue threadHue = new ThreadHue();
-                //colorThread.setThreadColor(true,62535,200,200);
-                //threadHue.start();
-                //threadHue.stop();
+
                 break;
             case GREEN:
                 new HueTask(HueTask.ORDER_GREEN).execute();
-                // ThreadHue threadHue1 = new ThreadHue();
-                //colorThread.setThreadColor(true,23500,200,200);
-                //threadHue1.start();
-                //query = new HueColor(true, 0, 0, 0);
+
                 break;
             case TURN_ON:
                 new HueTask(HueTask.ORDER_TURN_ON).execute();
-                //   ThreadHue threadHue2 = new ThreadHue();
-              //  colorThread.setThreadColor(true,0,200,0);
-              //  threadHue2.start();
-                //query = new HueColor(true, 0, 0, 0);
+
                 break;
             case TURN_OFF:
-          //      ThreadHue threadHue3 = new ThreadHue();
                 new HueTask(HueTask.ORDER_TURN_OFF).execute();
-                //  colorThread.setThreadColor(false,0,0,0);
-            //    threadHue3.start();
-                //query = new HueColor(true, 0, 0, 0);
+
                 break;
         }
 

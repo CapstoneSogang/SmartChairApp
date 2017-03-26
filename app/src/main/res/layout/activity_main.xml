@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="@dimen/graph_margin"
-            android:text="Your waist Health"
+            android:text="나의 허리 자세 그래프"
             android:textColor="@color/colorText"
             android:textSize="15sp" />
 
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="@dimen/graph_margin"
-            android:text="Your neck Health"
+            android:text="나의 목 자세 그래프"
             android:textColor="@color/colorText"
             android:textSize="15sp" />
 
@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="@dimen/graph_margin"
-            android:text="Your disease per Day"
+            android:text="나의 자세 습관 "
             android:textColor="@color/colorText"
             android:textSize="15sp" />
 
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="@dimen/graph_margin"
-            android:text="Your posture habit"
+            android:text="날짜별 자세 습관 "
             android:textColor="@color/colorText"
             android:textSize="15sp" />
 
@@ -75,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginTop="@dimen/graph_margin"
-            android:text="Your working hour per Day"
+            android:text="날짜별 작업시간"
             android:textColor="@color/colorText"
             android:textSize="15sp" />
 

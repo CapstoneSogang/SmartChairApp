@@ -42,7 +42,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_round"
                 android:onClick="clickBtnListener"
-                android:text="눌러서 램프를 찾아주세요" />
+                android:text="브릿지를 눌러서 램프를 찾아주세요" />
+
+
 
         </LinearLayout>
 
@@ -59,7 +61,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="clickBtnListener"
-                android:text="한번 더 눌러서 휴와 인증해주세요" />
+                android:background="@drawable/btn_round"
+                android:text="브릿지를 눌러서 휴를 인증해주세요" />
 
         </LinearLayout>
 

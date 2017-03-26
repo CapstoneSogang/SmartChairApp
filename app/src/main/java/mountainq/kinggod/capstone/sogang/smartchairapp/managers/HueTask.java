@@ -32,10 +32,15 @@ public class HueTask extends RegisterTask {
     private String ipAddress;
 
     private static boolean wait =false;
+    private int finCode=0;
 
     public HueTask(int order) {
         this.order = order;
     }
+    public HueTask(){}
+
+    public boolean getWaitBool(){return wait;}
+
 
     @Override
     protected Integer doInBackground(Integer... params) {
@@ -150,6 +155,7 @@ public class HueTask extends RegisterTask {
                             e.printStackTrace();
                         }
                         Log.d("notFin",Boolean.toString(notFin));
+                        finCode=1;
                     }while(notFin);
 
                     break;
@@ -199,6 +205,9 @@ public class HueTask extends RegisterTask {
         }
         Log.d("fin","ha");
         wait=false;
-        return super.doInBackground(params);
+
+        //finCode=1;
+       // return super.doInBackground(params);
+        return finCode;
     }
 }
