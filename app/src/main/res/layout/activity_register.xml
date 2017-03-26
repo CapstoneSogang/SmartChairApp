@@ -40,6 +40,7 @@
                 android:id="@+id/btnHueFind"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/btn_round"
                 android:onClick="clickBtnListener"
                 android:text="눌러서 램프를 찾아주세요" />
 

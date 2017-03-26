@@ -27,7 +27,7 @@ public class HueTask extends RegisterTask {
 
     private PropertyManager propertyManager = PropertyManager.getInstance();
 
-    private boolean DEBUG_MODE = true;
+    private boolean DEBUG_MODE = false; //수정
     private int order;
     private String ipAddress;
 
@@ -44,6 +44,7 @@ public class HueTask extends RegisterTask {
                     break;
                 case REGISTER:
                     jsonObject.put("devicetype", "my_hue_app");
+
                     break;
                 case ORDER_RED:
                     jsonObject.put("on", true);
@@ -76,6 +77,7 @@ public class HueTask extends RegisterTask {
 
 
         String jsonBody = jsonObject.toString();
+        Log.d("jsonBody",jsonBody);
         String result = "";
 
         try {
@@ -88,32 +90,55 @@ public class HueTask extends RegisterTask {
                             JSONObject object = array.getJSONObject(0);
                             if (!object.isNull("internalipaddress"))
                                 propertyManager.setHueIp(object.getString("internalipaddress"));
+                            Log.d("HueIPaddress",object.getString("internalipaddress"));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     if(DEBUG_MODE) propertyManager.setHueIp("success");
+                    Log.d("HueIPaddress",propertyManager.getHueIp());
                     break;
                 case REGISTER:
+                    // find hue username
                     if(DEBUG_MODE) propertyManager.setHueIp("success");
                     if(propertyManager.getHueIp().equals("default")){
                         Log.e("test", "we didn't receive hue ip not yet");
                         return null;
                     }
-                    result = postMethod(HTTP + propertyManager.getHueIp()
-                            + HUE_REGISTER, jsonBody);
-                    try {
-                        if (result != null) {
-                            JSONArray array = new JSONArray(result);
-                            JSONObject object = array.getJSONObject(0);
-                            if (!object.isNull("username")) {
-                                propertyManager.setHueName(object.getString("username"));
-                            }
+                    Log.d("hueip",propertyManager.getHueIp());
 
+                    boolean notFin=true;
+                    do{
+                        result = postMethod(HTTP + propertyManager.getHueIp()
+                                + HUE_REGISTER, jsonBody);
+                        Log.d("post",HTTP + propertyManager.getHueIp()
+                                + HUE_REGISTER);
+                        try {
+                            if (result != null) {
+                                JSONArray array = new JSONArray(result);
+                                JSONObject object = array.getJSONObject(0);
+                             //   Log.d(object.getString("username"),"username");
+                               //  Log.d(object.getString("error"),"error");
+                                if (!object.isNull("success")) {
+                                    notFin=false;
+                                    JSONObject successObj = new JSONArray("["+object.getString("success")+"]").getJSONObject(0);
+                                    propertyManager.setHueName(successObj.getString("username"));
+                                    Log.d("username", successObj.getString("username"));
+
+                                }
+
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("notFin",Boolean.toString(notFin));
+                    }while(notFin);
+
                     break;
                 case ORDER_RED:
                 case ORDER_GREEN:
@@ -127,8 +152,11 @@ public class HueTask extends RegisterTask {
                         Log.e("test", "we did not register hue device not yet");
                         return null;
                     }
-                    result = putMethod(HTTP + propertyManager.getHueIp() + REGISTER + propertyManager.getHueName() + HUE_ORDER
+                    Log.d("turnoff",HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER);
+                    Log.d("body",jsonBody);
+                    result = putMethod(HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER
                             , "", jsonBody);
+                    //result = getMethod()
 
                     if (result != null) {
                         Log.d("test", result);
