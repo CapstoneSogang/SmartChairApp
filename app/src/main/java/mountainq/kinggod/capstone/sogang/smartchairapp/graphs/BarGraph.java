@@ -254,15 +254,15 @@ public class BarGraph extends Graph {
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
 
-            //Log.d("haha0 : ",cord._date[0]);
+            Log.d("haha0 : ",cord._date[0]);
 
             long month = (long)(Long.parseLong(cord._date[0]))/100;
             long days= (long)(Long.parseLong(cord._date[0]))%100;
 
 
-            Log.d("haha : ",Float.toString(value));
+           // Log.d("haha : ",Float.toString(value));
           //  Log.d("haha : ",Long.toString(days));
-            long millis = TimeUnit.DAYS.toMillis((long) (getDaysFromMonth((int)month))+days+(long)value) ;
+            long millis = TimeUnit.DAYS.toMillis((long) (getDaysFromMonth((int)month))+days+(long)value-1) ;
 
 
             return mFormat.format(new Date((long)millis));
