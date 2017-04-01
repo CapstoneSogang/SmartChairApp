@@ -57,8 +57,16 @@ public class LineGraph extends Graph {
 
         }
         else {      //sensorFlag = neck
-            for (int i = cord.recentDateIdx; i < cord.numOfData; i++)
-                entries.add(new Entry(Float.parseFloat(cord._time[i]), cord.neckHealth[i]));
+            for (int i = cord.recentDateIdx; i < cord.numOfData; i++) {
+                long hours= (long)(Long.parseLong(cord._time[i]))/100 +15;
+                long minutes = (long)(Long.parseLong(cord._time[i]))%100;
+                Log.d("value : ",Long.toString((Long.parseLong(cord._time[i]))));
+                Log.d("hours : ",Long.toString(hours));
+                Log.d("mintues : ",Long.toString(minutes));
+                long millis = TimeUnit.HOURS.toMillis((long) hours) + TimeUnit.MINUTES.toMillis((long)minutes);
+                entries.add(new Entry((float)millis, cord.neckHealth[i]));
+                //entries.add(new Entry(Float.parseFloat(cord._time[i]), cord.neckHealth[i]));
+            }
             dataSet = new LineDataSet(entries, "Neck Health");
         }
 
@@ -165,35 +173,7 @@ public class LineGraph extends Graph {
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
-            // "value" represents the position of the label on the axis (x or y)
-            String time=Float.toString(value);
-            String hour, minute;
-            time = time.substring(0,time.length()-2);
 
-/*
-            while(time.length()!=4) //앞에 0014 일경우 00 을 추가해야함
-            {
-                time='0'+time;
-            }
-
-            // Log.d("time" , time);
-
-            hour = time.substring(0,2);
-            minute = time.substring(2,4);
-            //return hour+":"+minute;
-
-            */
-/*
-            long hours= (long)value/100;
-            long minutes = (long)value%100;
-            Log.d("value : ",Float.toString(value));
-            Log.d("hours : ",Long.toString(hours));
-            Log.d("mintues : ",Long.toString(minutes));
-            long millis = TimeUnit.HOURS.toMillis((long) hours) + TimeUnit.MINUTES.toMillis((long)minutes);
-           // Log.d("time",Long.toString(millis));
-
-            return mFormat.format(new Date(millis));
-            */
             return mFormat.format(new Date((long)value));
         }
 

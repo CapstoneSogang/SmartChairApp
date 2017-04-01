@@ -17,6 +17,7 @@ public class GetCordFromDB {
     protected final float FULL_SPAN = 60; //30분 앉아있으면 가장 멕시멈 / 미니멈된다고 가정
     protected final int MAX_DATA=1000;
 
+    public int recendDate;
     public int recentDateIdx = 0; //가장 최근 날짜의 인덱스
     public String _date[] = new String[ MAX_DATA];     //디비 내용 저장
     public String _time[] = new String[ MAX_DATA];

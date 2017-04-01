@@ -23,6 +23,11 @@ public class Graph {
     protected LineChart chart;
     protected PieChart pieChart;
     protected BarChart barChart;
+
+    public String getRecentDate()
+    {
+        return cord._date[cord.recentDateIdx];
+    }
 /*
     protected String _date[] = new String[ MAX_DATA];     //디비 내용 저장
     protected String _time[] = new String[ MAX_DATA];

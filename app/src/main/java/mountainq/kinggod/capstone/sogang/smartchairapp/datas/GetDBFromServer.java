@@ -209,53 +209,53 @@ public class GetDBFromServer {
         mDbOpenHelper.insertColumn("0402","2025","0" , "6");
         mDbOpenHelper.insertColumn("0402","2030","0" , "7");
 
-        //4/2 데이터 5분단위로 받아온다 /데이터 15개 /   70분 공부(19~20:10), 건강자세 :11번(11/15)
+        //4/3 데이터 5분단위로 받아온다 /데이터 15개 /   70분 공부(19~20:10), 건강자세 :11번(11/15)
 
-        mDbOpenHelper.insertColumn("0402","1900","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1905","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1910","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1915","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1920","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1925","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1930","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1935","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1940","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1945","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1950","1" , "1");
-        mDbOpenHelper.insertColumn("0402","1955","1" , "0");
-        mDbOpenHelper.insertColumn("0402","2000","1" , "0");
-        mDbOpenHelper.insertColumn("0402","2005","1" , "0");
-        mDbOpenHelper.insertColumn("0402","2010","0" , "5");
-
-    //4/3 데이터 5분단위로 받아온다 /데이터 24개 /   120분 공부(19~21),
-        //허리 : 정자세 -> 디스크(19:20~19:40) ->정자세 -> 디스크(20:00~20:30)
-        //목 : 정자세 -> 디스크 (19:50~22:20) -> 정자세
-        //건강자세 : 11번 : (11/24)
         mDbOpenHelper.insertColumn("0403","1900","1" , "1");
         mDbOpenHelper.insertColumn("0403","1905","1" , "1");
         mDbOpenHelper.insertColumn("0403","1910","1" , "1");
         mDbOpenHelper.insertColumn("0403","1915","1" , "1");
-        mDbOpenHelper.insertColumn("0403","1920","0" , "1");
-        mDbOpenHelper.insertColumn("0403","1925","0" , "1");
-        mDbOpenHelper.insertColumn("0403","1930","0" , "1");
-        mDbOpenHelper.insertColumn("0403","1935","0" , "1");
-        mDbOpenHelper.insertColumn("0403","1940","0" , "1");
+        mDbOpenHelper.insertColumn("0403","1920","1" , "1");
+        mDbOpenHelper.insertColumn("0403","1925","1" , "1");
+        mDbOpenHelper.insertColumn("0403","1930","1" , "1");
+        mDbOpenHelper.insertColumn("0403","1935","1" , "1");
+        mDbOpenHelper.insertColumn("0403","1940","1" , "1");
         mDbOpenHelper.insertColumn("0403","1945","1" , "1");
-        mDbOpenHelper.insertColumn("0403","1950","1" , "0");
+        mDbOpenHelper.insertColumn("0403","1950","1" , "1");
         mDbOpenHelper.insertColumn("0403","1955","1" , "0");
-        mDbOpenHelper.insertColumn("0403","2000","0" , "0");
-        mDbOpenHelper.insertColumn("0403","2005","0" , "0");
-        mDbOpenHelper.insertColumn("0403","2010","0" , "0");
-        mDbOpenHelper.insertColumn("0403","2015","0" , "0");
-        mDbOpenHelper.insertColumn("0403","2020","0" , "0");
-        mDbOpenHelper.insertColumn("0403","2025","0" , "4");
-        mDbOpenHelper.insertColumn("0403","2030","0" , "7");
-        mDbOpenHelper.insertColumn("0403","2035","1" , "6");
-        mDbOpenHelper.insertColumn("0403","2040","1" , "5");
-        mDbOpenHelper.insertColumn("0403","2045","1" , "1");
-        mDbOpenHelper.insertColumn("0403","2050","4" , "1");
-        mDbOpenHelper.insertColumn("0403","2055","4" , "1");
-        mDbOpenHelper.insertColumn("0403","2100","1" , "1");
+        mDbOpenHelper.insertColumn("0403","2000","1" , "0");
+        mDbOpenHelper.insertColumn("0403","2005","1" , "0");
+        mDbOpenHelper.insertColumn("0403","2010","0" , "5");
+
+    //4/4 데이터 5분단위로 받아온다 /데이터 24개 /   120분 공부(19~21),
+        //허리 : 정자세 -> 디스크(19:20~19:40) ->정자세 -> 디스크(20:00~20:30)
+        //목 : 정자세 -> 디스크 (19:50~22:20) -> 정자세
+        //건강자세 : 11번 : (11/24)
+        mDbOpenHelper.insertColumn("0404","1900","1" , "1");
+        mDbOpenHelper.insertColumn("0404","1905","1" , "1");
+        mDbOpenHelper.insertColumn("0404","1910","1" , "1");
+        mDbOpenHelper.insertColumn("0404","1915","1" , "1");
+        mDbOpenHelper.insertColumn("0404","1920","0" , "1");
+        mDbOpenHelper.insertColumn("0404","1925","0" , "1");
+        mDbOpenHelper.insertColumn("0404","1930","0" , "1");
+        mDbOpenHelper.insertColumn("0404","1935","0" , "1");
+        mDbOpenHelper.insertColumn("0404","1940","0" , "1");
+        mDbOpenHelper.insertColumn("0404","1945","1" , "1");
+        mDbOpenHelper.insertColumn("0404","1950","1" , "0");
+        mDbOpenHelper.insertColumn("0404","1955","1" , "0");
+        mDbOpenHelper.insertColumn("0404","2000","0" , "0");
+        mDbOpenHelper.insertColumn("0404","2005","0" , "0");
+        mDbOpenHelper.insertColumn("0404","2010","0" , "0");
+        mDbOpenHelper.insertColumn("0404","2015","0" , "0");
+        mDbOpenHelper.insertColumn("0404","2020","0" , "0");
+        mDbOpenHelper.insertColumn("0404","2025","0" , "4");
+        mDbOpenHelper.insertColumn("0404","2030","0" , "7");
+        mDbOpenHelper.insertColumn("0404","2035","1" , "6");
+        mDbOpenHelper.insertColumn("0404","2040","1" , "5");
+        mDbOpenHelper.insertColumn("0404","2045","1" , "1");
+        mDbOpenHelper.insertColumn("0404","2050","4" , "1");
+        mDbOpenHelper.insertColumn("0404","2055","4" , "1");
+        mDbOpenHelper.insertColumn("0404","2100","1" , "1");
 
         Log.d("insert", "zzz");
 
