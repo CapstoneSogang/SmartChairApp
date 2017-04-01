@@ -31,21 +31,25 @@ public class HueTask extends RegisterTask {
     private int order;
     private String ipAddress;
 
-    private static boolean wait =false;
-    private int finCode=0;
+    private static boolean wait = false;
+    private int finCode = 0;
 
     public HueTask(int order) {
         this.order = order;
     }
-    public HueTask(){}
 
-    public boolean getWaitBool(){return wait;}
+    public HueTask() {
+    }
+
+    public boolean getWaitBool() {
+        return wait;
+    }
 
 
     @Override
     protected Integer doInBackground(Integer... params) {
 
-        while(wait) //여러thread가 동시에 겹치는거 방지
+        while (wait) //여러thread가 동시에 겹치는거 방지
         {
             try {
                 Thread.sleep(500);
@@ -53,8 +57,8 @@ public class HueTask extends RegisterTask {
                 e.printStackTrace();
             }
         }
-        wait=true;
-        Log.d("start","ha");
+        wait = true;
+        Log.d("start", "ha");
         JSONObject jsonObject = new JSONObject();
         try {
             switch (order) {
@@ -95,7 +99,7 @@ public class HueTask extends RegisterTask {
 
 
         String jsonBody = jsonObject.toString();
-        Log.d("jsonBody",jsonBody);
+        Log.d("jsonBody", jsonBody);
         String result = "";
 
         try {
@@ -108,38 +112,37 @@ public class HueTask extends RegisterTask {
                             JSONObject object = array.getJSONObject(0);
                             if (!object.isNull("internalipaddress"))
                                 propertyManager.setHueIp(object.getString("internalipaddress"));
-                            Log.d("HueIPaddress",object.getString("internalipaddress"));
+                            Log.d("HueIPaddress", object.getString("internalipaddress"));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    if(DEBUG_MODE) propertyManager.setHueIp("success");
-                    Log.d("HueIPaddress",propertyManager.getHueIp());
+                    if (DEBUG_MODE) propertyManager.setHueIp("success");
+                    Log.d("HueIPaddress", propertyManager.getHueIp());
                     break;
                 case REGISTER:
                     // find hue username
-                    if(DEBUG_MODE) propertyManager.setHueIp("success");
-                    if(propertyManager.getHueIp().equals("default")){
+                    if (propertyManager.getHueIp().equals("default")) {
                         Log.e("test", "we didn't receive hue ip not yet");
                         return null;
                     }
-                    Log.d("hueip",propertyManager.getHueIp());
+                    Log.d("hueip", propertyManager.getHueIp());
 
-                    boolean notFin=true;
-                    do{
+                    boolean notFin = true;
+                    do {
                         result = postMethod(HTTP + propertyManager.getHueIp()
                                 + HUE_REGISTER, jsonBody);
-                        Log.d("post",HTTP + propertyManager.getHueIp()
+                        Log.d("post", HTTP + propertyManager.getHueIp()
                                 + HUE_REGISTER);
                         try {
                             if (result != null) {
                                 JSONArray array = new JSONArray(result);
                                 JSONObject object = array.getJSONObject(0);
-                             //   Log.d(object.getString("username"),"username");
-                               //  Log.d(object.getString("error"),"error");
+                                //   Log.d(object.getString("username"),"username");
+                                //  Log.d(object.getString("error"),"error");
                                 if (!object.isNull("success")) {
-                                    notFin=false;
-                                    JSONObject successObj = new JSONArray("["+object.getString("success")+"]").getJSONObject(0);
+                                    notFin = false;
+                                    JSONObject successObj = new JSONArray("[" + object.getString("success") + "]").getJSONObject(0);
                                     propertyManager.setHueName(successObj.getString("username"));
                                     Log.d("username", successObj.getString("username"));
 
@@ -154,25 +157,25 @@ public class HueTask extends RegisterTask {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        Log.d("notFin",Boolean.toString(notFin));
-                        finCode=1;
-                    }while(notFin);
+                        Log.d("notFin", Boolean.toString(notFin));
+                        finCode = 1;
+                    } while (notFin);
 
                     break;
 
-                case ORDER_RED: if(DEBUG_MODE){
-                    propertyManager.setHueIp("success");
-                    propertyManager.setHueName("success");
-                }
-                    if(propertyManager.getHueIp().equals("default") || propertyManager.getHueName().equals("default")){
+                case ORDER_RED:
+                    if (DEBUG_MODE) {
+                        propertyManager.setHueIp("success");
+                        propertyManager.setHueName("success");
+                    }
+                    if (propertyManager.getHueIp().equals("default") || propertyManager.getHueName().equals("default")) {
                         Log.e("test", "we did not register hue device not yet");
                         return null;
                     }
-                    Log.d("turnoff",HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER);
-                    Log.d("body",jsonBody);
+                    Log.d("turnoff", HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER);
+                    Log.d("body", jsonBody);
                     result = putMethod(HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER
                             , "", jsonBody);
-                    //result = getMethod()
 
                     if (result != null) {
                         Log.d("test", result);
@@ -180,16 +183,16 @@ public class HueTask extends RegisterTask {
                 case ORDER_GREEN:
                 case ORDER_TURN_ON:
                 case ORDER_TURN_OFF:
-                    if(DEBUG_MODE){
+                    if (DEBUG_MODE) {
                         propertyManager.setHueIp("success");
                         propertyManager.setHueName("success");
                     }
-                    if(propertyManager.getHueIp().equals("default") || propertyManager.getHueName().equals("default")){
+                    if (propertyManager.getHueIp().equals("default") || propertyManager.getHueName().equals("default")) {
                         Log.e("test", "we did not register hue device not yet");
                         return null;
                     }
-                    Log.d("turnoff",HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER);
-                    Log.d("body",jsonBody);
+                    Log.d("turnoff", HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER);
+                    Log.d("body", jsonBody);
                     result = putMethod(HTTP + propertyManager.getHueIp() + HUE_REGISTER + propertyManager.getHueName() + HUE_ORDER
                             , "", jsonBody);
                     //result = getMethod()
@@ -203,11 +206,11 @@ public class HueTask extends RegisterTask {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.d("fin","ha");
-        wait=false;
+        Log.d("fin", "ha");
+        wait = false;
 
         //finCode=1;
-       // return super.doInBackground(params);
+        // return super.doInBackground(params);
         return finCode;
     }
 }

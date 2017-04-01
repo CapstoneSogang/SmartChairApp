@@ -49,15 +49,6 @@ public class ChairService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         showNotification(remoteMessage.getData());
         Log.d("test", "received message : " + remoteMessage.getData().toString());
-        /*
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
-        t.start();
-        */
     }
 
 
