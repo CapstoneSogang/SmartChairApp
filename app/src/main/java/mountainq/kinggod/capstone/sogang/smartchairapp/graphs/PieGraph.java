@@ -1,6 +1,7 @@
 package mountainq.kinggod.capstone.sogang.smartchairapp.graphs;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -21,6 +22,7 @@ public class PieGraph extends Graph {
     public PieGraph(GetCordFromDB getCordFromDB, PieChart chart) {
         super(getCordFromDB, chart);
     }
+
     public void drawGraph(String date)
     {
         pieChart.setUsePercentValues(true);
@@ -62,7 +64,9 @@ public class PieGraph extends Graph {
 
 
         //set data
+
         ArrayList<PieEntry> entries = setPieData(date);
+        Log.d("recent date " ,date);
         /*
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 
@@ -108,7 +112,22 @@ public class PieGraph extends Graph {
         float waistPro=0,neckPro=0,bothPro=0,goodPos=0;
 
         for(int i=cord.recentDateIdx;i<cord.numOfData;i++) {
+
             if(cord._date[i].equals(date))
+            {
+                if(cord.neck[i].equals("0") && cord.waist[i].equals("0")) // 건강한 상태
+                    goodPos++;
+                if(!cord.neck[i].equals("0") && cord.waist[i].equals("0")) // 목디스크 상태
+                    neckPro++;
+                if(cord.neck[i].equals("0") && !cord.waist[i].equals("0")) // 허리디스크 상태
+                    waistPro++;
+                if(!cord.neck[i].equals("0") && !cord.waist[i].equals("0")) // 양쪽문제 상태
+                    bothPro++;
+
+                Log.d("pie waist : ",Float.toString(waistPro));
+
+            }
+           /* if(cord._date[i].equals(date))
             {
                 if(cord.neck[i].equals("0") && cord.waist[i].equals("0")) // 건강한 상태
                     goodPos++;
@@ -120,8 +139,10 @@ public class PieGraph extends Graph {
                     bothPro++;
 
             }
+*/
 
         }
+       // Log.d("Pie graph : ",Float.toString(goodPos));
 
         entries.add(new PieEntry(goodPos,"Healthy"));
         entries.add(new PieEntry(neckPro,"Neck Problem"));

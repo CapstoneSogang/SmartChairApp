@@ -13,10 +13,11 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetDBFromServer;
 
 public class GetCordFromDB {
 
-    protected final float TIME_SPAN = 1; //1분단위 센서값 가정시
-    protected final float FULL_SPAN = 5; //30분 앉아있으면 가장 멕시멈 / 미니멈된다고 가정
+    protected final float TIME_SPAN = 5; //1분단위 센서값 가정시
+    protected final float FULL_SPAN = 60; //30분 앉아있으면 가장 멕시멈 / 미니멈된다고 가정
     protected final int MAX_DATA=1000;
 
+    public int recendDate;
     public int recentDateIdx = 0; //가장 최근 날짜의 인덱스
     public String _date[] = new String[ MAX_DATA];     //디비 내용 저장
     public String _time[] = new String[ MAX_DATA];
@@ -109,10 +110,11 @@ public class GetCordFromDB {
                 neckHealth[i]=100;
             if(neckHealth[i]<=0)
                 neckHealth[i]=0;
-            Log.d("recentDateIdx",Integer.toString(recentDateIdx));
-            Log.d("date",_date[i]);
-            Log.d("waistHealth",waist[i]);
-            Log.d("neckHealth",neck[i]);
+           // Log.d("recentDateIdx",Integer.toString(recentDateIdx));
+            //Log.d("date",_date[i]);
+            //Log.d("waistHealth",waist[i]);
+        //    Log.d("neckHealth",neck[i]);
+            Log.d("waistHealth",Float.toString(waistHealth[i]));
         }
     }
 }

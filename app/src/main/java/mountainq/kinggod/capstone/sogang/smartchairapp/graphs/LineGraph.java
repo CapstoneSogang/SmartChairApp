@@ -1,6 +1,7 @@
 package mountainq.kinggod.capstone.sogang.smartchairapp.graphs;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -14,8 +15,11 @@ import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
 
@@ -35,14 +39,34 @@ public class LineGraph extends Graph {
         LineDataSet dataSet;
         //waist health data grpah
         if (sensorFlag.equals("waist")) {
-            for (int i = cord.recentDateIdx; i < cord.numOfData; i++)
-                entries.add(new Entry(Float.parseFloat(cord._time[i]), cord.waistHealth[i]));
-            //     entries.add(new Entry(Float.parseFloat(_time[i]), Float.parseFloat(waist[i])));
+            for (int i = cord.recentDateIdx; i < cord.numOfData; i++) {
+
+                long hours= (long)(Long.parseLong(cord._time[i]))/100 +15;
+                long minutes = (long)(Long.parseLong(cord._time[i]))%100;
+                Log.d("value : ",Long.toString((Long.parseLong(cord._time[i]))));
+                Log.d("hours : ",Long.toString(hours));
+                Log.d("mintues : ",Long.toString(minutes));
+                long millis = TimeUnit.HOURS.toMillis((long) hours) + TimeUnit.MINUTES.toMillis((long)minutes);
+              //  entries.add(new Entry(Float.parseFloat(cord._time[i]), cord.waistHealth[i]));
+                entries.add(new Entry((float)millis, cord.waistHealth[i]));
+                //     entries.add(new Entry(Float.parseFloat(_time[i]), Float.parseFloat(waist[i])));
+
+            }
+
             dataSet= new LineDataSet(entries, "Waist Health");
+
         }
         else {      //sensorFlag = neck
-            for (int i = cord.recentDateIdx; i < cord.numOfData; i++)
-                entries.add(new Entry(Float.parseFloat(cord._time[i]), cord.neckHealth[i]));
+            for (int i = cord.recentDateIdx; i < cord.numOfData; i++) {
+                long hours= (long)(Long.parseLong(cord._time[i]))/100 +15;
+                long minutes = (long)(Long.parseLong(cord._time[i]))%100;
+                Log.d("value : ",Long.toString((Long.parseLong(cord._time[i]))));
+                Log.d("hours : ",Long.toString(hours));
+                Log.d("mintues : ",Long.toString(minutes));
+                long millis = TimeUnit.HOURS.toMillis((long) hours) + TimeUnit.MINUTES.toMillis((long)minutes);
+                entries.add(new Entry((float)millis, cord.neckHealth[i]));
+                //entries.add(new Entry(Float.parseFloat(cord._time[i]), cord.neckHealth[i]));
+            }
             dataSet = new LineDataSet(entries, "Neck Health");
         }
 
@@ -139,6 +163,7 @@ public class LineGraph extends Graph {
     class AxisTimeFormatter implements IAxisValueFormatter {  //axis format x축 시간화
 
         // private DecimalFormat mFormat;
+        private SimpleDateFormat mFormat = new SimpleDateFormat("HH:mm");
 
         public AxisTimeFormatter() {
 
@@ -148,23 +173,8 @@ public class LineGraph extends Graph {
 
         @Override
         public String getFormattedValue(float value, AxisBase axis) {
-            // "value" represents the position of the label on the axis (x or y)
-            String time=Float.toString(value);
-            String hour, minute;
-            time = time.substring(0,time.length()-2);
 
-
-            while(time.length()!=4) //앞에 0014 일경우 00 을 추가해야함
-            {
-                time='0'+time;
-            }
-
-            // Log.d("time" , time);
-
-            hour = time.substring(0,2);
-            minute = time.substring(2,4);
-
-            return hour+":"+minute;
+            return mFormat.format(new Date((long)value));
         }
 
         /** this is only needed if numbers are returned, else return 0 */

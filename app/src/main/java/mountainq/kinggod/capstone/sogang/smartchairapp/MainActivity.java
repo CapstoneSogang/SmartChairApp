@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private Cursor mCursor;
     private Graph waistGraph, neckGraph, pieGraph, barGraph;
 
-    private String date = "0319";
+    private String date;
     // private InfoClass mInfoClass;
     // private ArrayList<infoclass> mInfoArray;
     // private CustomAdapter mAdapter;
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         PieChart pieChart = (PieChart) findViewById(R.id.pie_chart);
         pieGraph = new PieGraph(getCordFromDB, pieChart);
+        date=pieGraph.getRecentDate();
         pieGraph.drawGraph(date);
 
         BarChart barChartWork = (BarChart) findViewById(R.id.bar_chart_work);
