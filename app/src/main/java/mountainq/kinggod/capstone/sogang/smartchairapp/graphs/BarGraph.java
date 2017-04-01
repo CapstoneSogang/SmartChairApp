@@ -132,11 +132,11 @@ public class BarGraph extends Graph {
                  //   dateIdx++;
 
                 if (i == 0) {
-                    if (cord.neck[i].equals("0") && cord.waist[i].equals("0")) // 건강한 상태
+                    if (!cord.neck[i].equals("0") && !cord.waist[i].equals("0")) // 건강한 상태
                         goodPos++;
                     allData++;
                 } else if (cord._date[i].equals(cord._date[i - 1]) && i != cord.numOfData - 1) {
-                    if (cord.neck[i].equals("0") && cord.waist[i].equals("0")) // 건강한 상태
+                    if (!cord.neck[i].equals("0") && !cord.waist[i].equals("0")) // 건강한 상태
                         goodPos++;
                     allData++;
                 } else {
