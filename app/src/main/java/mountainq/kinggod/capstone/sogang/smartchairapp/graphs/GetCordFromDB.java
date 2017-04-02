@@ -32,6 +32,8 @@ public class GetCordFromDB {
     public float neckHealth[] = new float[MAX_DATA];
    // public String check="0";
 
+    public GetCordFromDB(){};
+
     public GetCordFromDB(DbOpenHelper mDbOpenHelper)
     {
         this.mDbOpenHelper = mDbOpenHelper;

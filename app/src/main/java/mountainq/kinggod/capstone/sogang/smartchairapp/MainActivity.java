@@ -15,7 +15,7 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.GetCordFromDB;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.Graph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.LineGraph;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.PieGraph;
-///
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "TestDataBaseActivity";

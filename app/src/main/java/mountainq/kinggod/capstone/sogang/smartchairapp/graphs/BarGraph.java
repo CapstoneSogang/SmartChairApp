@@ -70,8 +70,10 @@ public class BarGraph extends Graph {
         leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
         leftAxis.setSpaceTop(15f);
         leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        leftAxis.setValueFormatter(new BarGraph.AxisYFormatter(barFlag));
 
         YAxis rightAxis = barChart.getAxisRight();
+
         rightAxis.setDrawGridLines(false);
         // rightAxis.setTypeface(mTfLight);
         rightAxis.setLabelCount(8, false);
@@ -162,7 +164,7 @@ public class BarGraph extends Graph {
                         yVals1.add(new BarEntry(dateIdx++, 0));
                     else {
                        // yVals1.add(new BarEntry(Integer.parseInt(cord._date[i - 1]), goodPos / allData));
-                         yVals1.add(new BarEntry(dateIdx++, goodPos / allData));
+                         yVals1.add(new BarEntry(dateIdx++, 100*goodPos / allData));
                         // Log.d(Integer.toString(tp),Float.toString(goodPos / allData));
                         Log.d("bar", cord._date[i]);
                     }
@@ -188,7 +190,7 @@ public class BarGraph extends Graph {
                 else if(cord._date[i].equals(cord._date[i-1]) && i != cord.numOfData-1)
                     allData++;
                 else{
-                    yVals1.add(new BarEntry(dateIdx++, allData));
+                    yVals1.add(new BarEntry(dateIdx++, new GetCordFromDB().TIME_SPAN*allData));
                     allData=0;
                 }
             }
@@ -272,6 +274,40 @@ public class BarGraph extends Graph {
         //@Override
         public int getDecimalDigits() { return 1; }
     }
+
+    class AxisYFormatter implements IAxisValueFormatter { //axis formatter : y축 %화
+
+        // private DecimalFormat mFormat;
+        String flag;
+
+        public AxisYFormatter(String flag) {
+
+            this.flag=flag; //flag = "posture" or "working"
+            // format values to 1 decimal digit
+            // mFormat = new DecimalFormat();
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+            // "value" represents the position of the label on the axis (x or y)
+            if(flag.equals("posture")) {    //날짜별 자세 정확도 그래프
+                String percent = Integer.toString((int)(value));
+               // percent = percent.substring(0, percent.length() - 2);
+                return percent + "%";
+            }
+            else    //날짜별 작업시간 그래프 "work
+            {
+                int minutes =(int)value;
+                int hour = minutes/60;
+                //minutes = minutes%60;
+
+                return Integer.toString(minutes)+"min";
+            }
+
+
+    }
+}
+
 
 }
 
