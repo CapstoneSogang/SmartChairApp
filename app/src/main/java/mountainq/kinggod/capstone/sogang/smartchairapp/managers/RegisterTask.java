@@ -14,10 +14,10 @@ import okhttp3.RequestBody;
  * Created by dnay2 on 2017-03-25.
  */
 
-public class RegisterTask extends AsyncTask<Integer, Void, Integer> {
-
-    protected final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    protected OkHttpClient client = new OkHttpClient();
+public class RegisterTask extends AsyncTask<Integer, Integer, Integer> {
+    private static final String TAG = "RegisterTask";
+    private final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+    private OkHttpClient client = new OkHttpClient();
     @Override
     protected Integer doInBackground(Integer... params) {
         return null;
@@ -28,30 +28,30 @@ public class RegisterTask extends AsyncTask<Integer, Void, Integer> {
         Log.d("test", "task running");
     }
 
-    public String postMethod (String url, String json) throws IOException {
+    protected String postMethod (String url, String json) throws IOException {
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
                 .header("content-type", "application/json")
                 .post(body)
                 .build();
-        Log.d("test", "post request : " + request.body().toString());
+        Log.d(TAG, "post request : " + request.body().toString());
         okhttp3.Response response = client.newCall(request).execute();
         return response.body().string();
     }
 
-    public String getMethod (String url) throws IOException {
+    protected String getMethod (String url) throws IOException {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-
+        Log.d(TAG, "get request : " + request.body().toString());
         okhttp3.Response response = client.newCall(request).execute();
         return response.body().string();
     }
 
-    public String putMethod (String url, String header, String jsonBody) throws IOException{
+    protected String putMethod (String url, String header, String jsonBody) throws IOException{
         RequestBody body = RequestBody.create(JSON, jsonBody);
-
+        Log.d(TAG, "put request ");
         Request request = new Request.Builder()
                 .url(url)
                 .put(body)
