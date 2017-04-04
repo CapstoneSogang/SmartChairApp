@@ -12,9 +12,11 @@ public class StaticDatas {
         return instance;
     }
     static {instance = new StaticDatas();}
-    public static final String BASE_URL = "http://52.231.29.193:3000/";
+ //jinu   public static final String BASE_URL = "http://52.231.29.193:3000/";
+    public static final String BASE_URL = " http://52.231.39.51:3000/";
     public static final String CREATE_URL = BASE_URL + "create/";
-    public static final String LOGIN_URL = BASE_URL + "login/";
+  //jinu  public static final String LOGIN_URL = BASE_URL + "login/";
+    public static final String LOGIN_URL = BASE_URL + "data/";
     public static final String GET_DATA_URL = BASE_URL + "getdata/";
 
     public static final String HUE_IP_URL= "https://www.meethue.com/";
@@ -41,6 +43,9 @@ public class StaticDatas {
     public static final int COLOR_GREEN_ALPHA = 0x4dc9e78d;
     public static final int COLOR_BLUE_ALPHA = 0x4da7bbe0;
 
+    //jinu
+    public static String loginId="psogv0308";
+    public static String lastTime;
     public static final int[] COLOR_ARRAY= {
             COLOR_BROWN,
             COLOR_PINK,

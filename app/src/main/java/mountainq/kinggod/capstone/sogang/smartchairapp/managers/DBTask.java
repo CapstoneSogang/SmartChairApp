@@ -1,13 +1,18 @@
 package mountainq.kinggod.capstone.sogang.smartchairapp.managers;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.StringTokenizer;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.PostureData;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
@@ -100,41 +105,71 @@ public class DBTask extends RegisterTask {
 
     }
 
-    private void setGetDataFromServer(){
+    private void setGetDataFromServer() {
         DataBaseManager dbm = new DataBaseManager(mContext);
         JSONObject jsonObject = new JSONObject();
-        try{
-            jsonObject.put("token", PropertyManager.getInstance().getPushToken());
-        }catch (JSONException e){
+        try {
+            //jinu
+            jsonObject.put("id", StaticDatas.loginId);
+            jsonObject.put("last_time", StaticDatas.lastTime);
+
+            //jsonObject.put("token", PropertyManager.getInstance().getPushToken());
+        } catch (JSONException e) {
             e.printStackTrace();
         }
         String jsonBody = jsonObject.toString();
         String result;
         try {
             result = postMethod(StaticDatas.LOGIN_URL, jsonBody);
-            if(result != null){
-                try{
+            if (result != null) {
+                try {
                     JSONArray array = new JSONArray(result);
                     JSONObject temp;
-                    for(int i=0;i<array.length();i++){
+                    for (int i = 0; i < array.length(); i++) {
                         temp = array.getJSONObject(i);
+                        //jinu
+                        String serverDate = temp.getString("DATE_TIME");
+                        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(changeTimeFormat(serverDate));
+                        // Timestamp timestamp = new Timestamp(date.getTime());
+                        Log.d("mydate1:",changeTimeFormat(serverDate));
+
+                        SimpleDateFormat sdfDate = new SimpleDateFormat("MMdd");
+                        SimpleDateFormat sdfHour = new SimpleDateFormat("HHmm");
+                        Log.d("curtime", sdfDate.format(date));
+
                         PostureData item = new PostureData(
-                                temp.getString("_date"),
-                                temp.getString("_time"),
-                                temp.getString("waist"),
-                                temp.getString("neck"));
+                                //  temp.getString("_date"),
+                                //  temp.getString("_time"),
+                                sdfDate.format(date),
+                                sdfHour.format(date),
+                                temp.getString("WAIST"),
+                                temp.getString("NECK"));
                         dbm.insertItem(item);
                     }
-                }catch (JSONException e){
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-
     }
+    public String changeTimeFormat(String serverDate)//server date format : 2017-04-03T15:06:59.900Z
+
+    {
+        StringTokenizer strTok = new StringTokenizer(serverDate,"T");
+        String date = strTok.nextToken();
+        String hour = strTok.nextToken();
+        strTok = new StringTokenizer(hour,".");
+        hour = strTok.nextToken();
+
+        return date+" "+hour;
+        //return format :  2017-04-03 15:06:59"
+    }
+
+
 
 }
