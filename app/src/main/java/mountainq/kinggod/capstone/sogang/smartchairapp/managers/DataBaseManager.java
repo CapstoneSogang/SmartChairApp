@@ -28,6 +28,8 @@ public class DataBaseManager extends SQLiteOpenHelper {
         private static final String _TIME = " _time ";
         private static final String POS_WAIST = " waist ";
         private static final String POS_NECK = " neck ";
+        private static final String POS_LEFT = "posLeft";
+        private static final String POS_RIGHT = "posRight";
     }
 
     private static final String TEXT_TYPE = " text ";
@@ -40,7 +42,9 @@ public class DataBaseManager extends SQLiteOpenHelper {
             + PostureColumns._DATE + TEXT_TYPE + NOT_NULL + COMMA_SEP
             + PostureColumns._TIME + TEXT_TYPE + NOT_NULL + COMMA_SEP
             + PostureColumns.POS_WAIST + TEXT_TYPE + NOT_NULL + COMMA_SEP
-            + PostureColumns.POS_NECK + TEXT_TYPE + NOT_NULL + " );";
+            + PostureColumns.POS_NECK + TEXT_TYPE + NOT_NULL + COMMA_SEP
+            + PostureColumns.POS_LEFT + TEXT_TYPE + NOT_NULL + COMMA_SEP
+            + PostureColumns.POS_RIGHT + TEXT_TYPE + NOT_NULL + " );";
     private static final String _DELETE_TABLE =
             "DROP TABLE IF EXISTS " + DB_NAME;
 
@@ -85,6 +89,9 @@ public class DataBaseManager extends SQLiteOpenHelper {
         values.put(PostureColumns._TIME, item.get_time());
         values.put(PostureColumns.POS_WAIST, item.getWaist());
         values.put(PostureColumns.POS_NECK, item.getNeck());
+        values.put(PostureColumns.POS_LEFT, item.getPosLeft());
+        values.put(PostureColumns.POS_RIGHT, item.getPosRight());
+
         long newRowId = db.insert(PostureColumns._TABLE_NAME, null, values);
         if(newRowId < 0) return false;
         Log.d(TAG, "inserted item ===> newRowId : " + newRowId);
@@ -131,7 +138,9 @@ public class DataBaseManager extends SQLiteOpenHelper {
                 PostureColumns._DATE,
                 PostureColumns._TIME,
                 PostureColumns.POS_WAIST,
-                PostureColumns.POS_NECK
+                PostureColumns.POS_NECK,
+                PostureColumns.POS_LEFT,
+                PostureColumns.POS_RIGHT,
         };
 
         String whereClause = PostureColumns._DATE + "= ? AND " + PostureColumns._TIME + "= ?";
@@ -140,7 +149,7 @@ public class DataBaseManager extends SQLiteOpenHelper {
         try{
             Cursor c = db.query(PostureColumns._TABLE_NAME, tableColumns, whereClause, whereArgs, null, null, null);
             c.moveToFirst();
-            foundItem = new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3));
+            foundItem = new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3),c.getString(4),c.getString(5));
             c.close();
         } catch (Exception e){
             Log.d(TAG, "Can not get exist item Errmsg : " + e.getMessage());
@@ -167,15 +176,17 @@ public class DataBaseManager extends SQLiteOpenHelper {
                 PostureColumns._DATE,
                 PostureColumns._TIME,
                 PostureColumns.POS_WAIST,
-                PostureColumns.POS_NECK
+                PostureColumns.POS_NECK,
+                PostureColumns.POS_LEFT,
+                PostureColumns.POS_RIGHT
         };
 
         try{
             Cursor c = db.query(PostureColumns._TABLE_NAME, tableColumns, null, null, null, null, null);
             c.moveToFirst();
-            foundList.add(new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3)));
+            foundList.add(new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5)));
             while(c.moveToNext())
-                foundList.add(new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3)));
+                foundList.add(new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5)));
             c.close();
         } catch (Exception e){
             Log.d(TAG, "Can not get exist item Errmsg : " + e.getMessage());
@@ -202,7 +213,9 @@ public class DataBaseManager extends SQLiteOpenHelper {
                 PostureColumns._DATE,
                 PostureColumns._TIME,
                 PostureColumns.POS_WAIST,
-                PostureColumns.POS_NECK
+                PostureColumns.POS_NECK,
+                PostureColumns.POS_LEFT,
+                PostureColumns.POS_RIGHT
         };
 
         String whereClause = PostureColumns._DATE + ">= ? AND " + PostureColumns._DATE + "<= ?";
@@ -211,9 +224,9 @@ public class DataBaseManager extends SQLiteOpenHelper {
         try{
             Cursor c = db.query(PostureColumns._TABLE_NAME, tableColumns, whereClause, whereArgs, null, null, null);
             c.moveToFirst();
-            foundList.add(new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3)));
+            foundList.add(new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5)));
             while(c.moveToNext())
-                foundList.add(new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3)));
+                foundList.add(new PostureData(c.getString(0), c.getString(1), c.getString(2), c.getString(3), c.getString(4), c.getString(5)));
             c.close();
         } catch (Exception e){
             Log.d(TAG, "Can not get exist item Errmsg : " + e.getMessage());

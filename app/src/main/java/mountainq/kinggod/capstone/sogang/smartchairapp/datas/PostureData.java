@@ -10,12 +10,16 @@ public class PostureData {
     private String _time;
     private String waist;
     private String neck;
+    private String posLeft;
+    private String posRight;
 
-    public PostureData(String _date, String _time, String waist, String neck) {
+    public PostureData(String _date, String _time, String waist, String neck, String posLeft, String posRight) {
         this._date = _date;
         this._time = _time;
         this.waist = waist;
         this.neck = neck;
+        this.posLeft = posLeft;
+        this.posRight = posRight;
     }
 
     public String get_date() {
@@ -48,5 +52,21 @@ public class PostureData {
 
     public void setNeck(String neck) {
         this.neck = neck;
+    }
+
+    public String getPosLeft() {
+        return posLeft;
+    }
+
+    public void setPosLeft(String posLeft) {
+        this.posLeft = posLeft;
+    }
+
+    public String getPosRight() {
+        return posRight;
+    }
+
+    public void setPosRight(String posRight) {
+        this.posRight = posRight;
     }
 }

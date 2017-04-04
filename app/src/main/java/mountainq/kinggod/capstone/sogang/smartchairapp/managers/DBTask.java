@@ -143,7 +143,11 @@ public class DBTask extends RegisterTask {
                                 sdfDate.format(date),
                                 sdfHour.format(date),
                                 temp.getString("WAIST"),
-                                temp.getString("NECK")); //
+                                temp.getString("NECK"),
+                                temp.getString("POSTURE_L"),
+                                temp.getString("POSTURE_R")
+
+                        ); //
                         dbm.insertItem(item);
                     }
                 } catch (JSONException e) {
