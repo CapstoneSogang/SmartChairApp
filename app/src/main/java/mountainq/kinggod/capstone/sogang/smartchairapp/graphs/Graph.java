@@ -17,7 +17,7 @@ public class Graph {
  //   protected final int MAX_DATA = 1000;
   //  protected final float TIME_SPAN = 1; //1분단위 센서값 가정시
    // protected final float FULL_SPAN = 5; //30분 앉아있으면 가장 멕시멈 / 미니멈된다고 가정
-    protected GetCordFromDB cord; //corridnate 가 모조리 몰려있다
+    protected GetCordFromDB cord = new GetCordFromDB(); //corridnate 가 모조리 몰려있다
     //  DbOpenHelper mDbOpenHelper;
     //   protected Cursor mCursor;
     protected LineChart chart;
@@ -43,10 +43,10 @@ public class Graph {
 
     //   protected int numOfData;
 
-    public Graph(GetCordFromDB getCordFromDB, LineChart chart)    //여기서 디비 내용을 읽어온다
+    public Graph(/*GetCordFromDB getCordFromDB,*/ LineChart chart)    //여기서 디비 내용을 읽어온다
     {
         //  this.mDbOpenHelper = mDbOpenHelper;
-        this.cord = getCordFromDB;
+       // this.cord = getCordFromDB;
         this.chart = chart;
         //   getDataBase("line chart");
     }

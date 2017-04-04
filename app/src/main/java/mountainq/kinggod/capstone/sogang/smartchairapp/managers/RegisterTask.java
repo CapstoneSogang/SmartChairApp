@@ -44,7 +44,7 @@ public class RegisterTask extends AsyncTask<Integer, Integer, Integer> {
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        Log.d(TAG, "get request : " + request.body().toString());
+//        Log.d(TAG, "get request : " + request.body().toString());
         okhttp3.Response response = client.newCall(request).execute();
         return response.body().string();
     }

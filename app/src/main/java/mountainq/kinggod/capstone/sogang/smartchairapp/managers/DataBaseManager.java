@@ -20,7 +20,7 @@ public class DataBaseManager extends SQLiteOpenHelper {
 
     private static final String TAG = "Database Manager";
     private static final String DB_NAME = "posture.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 10;
 
     private static class PostureColumns implements BaseColumns {
         private static final String _TABLE_NAME = " posture ";
@@ -93,6 +93,7 @@ public class DataBaseManager extends SQLiteOpenHelper {
         values.put(PostureColumns.POS_RIGHT, item.getPosRight());
 
         long newRowId = db.insert(PostureColumns._TABLE_NAME, null, values);
+        Log.d("check","error");
         if(newRowId < 0) return false;
         Log.d(TAG, "inserted item ===> newRowId : " + newRowId);
         db.close();
@@ -171,6 +172,7 @@ public class DataBaseManager extends SQLiteOpenHelper {
             onCreate(db);
             return null;
         }
+
 
         String[] tableColumns = {
                 PostureColumns._DATE,

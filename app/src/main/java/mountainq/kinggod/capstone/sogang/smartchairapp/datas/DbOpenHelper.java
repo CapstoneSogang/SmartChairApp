@@ -13,7 +13,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DbOpenHelper {
 
-    private static final String DATABASE_NAME = "posture.db";
+    private static final String DATABASE_NAME = "posture1.db";
     private static final int DATABASE_VERSION = 3;  //db table 수정시 버전을 바꿔줘야함
     public static SQLiteDatabase mDB;
     private DatabaseHelper mDBHelper;

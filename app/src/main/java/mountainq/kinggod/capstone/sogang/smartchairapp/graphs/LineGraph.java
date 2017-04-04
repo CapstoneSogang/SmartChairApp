@@ -29,8 +29,8 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
 
 public class LineGraph extends Graph {
 
-    public LineGraph(GetCordFromDB getCordFromDB, LineChart chart) {
-        super(getCordFromDB, chart);
+    public LineGraph(/*GetCordFromDB getCordFromDB,*/ LineChart chart) {
+        super(/*getCordFromDB,*/ chart);
     }
 
     public void drawGraph(String sensorFlag)

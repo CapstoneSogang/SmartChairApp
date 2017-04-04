@@ -16,6 +16,7 @@ import java.util.StringTokenizer;
 
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.PostureData;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.StaticDatas;
+import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.GetCordFromDB;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.Graph;
 
 /**
@@ -24,9 +25,10 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.Graph;
 
 public class DBTask extends RegisterTask {
 
-    public static final int GET_DATA_FROM_SERVER = 10;
+
     public static final int DELETE_ALL_DATA = 90;
     public static final int DELETE_ITEM = 80;
+    public static final int GET_DATA_FROM_SERVER = 10;
     public static final int DRAW_GRAPH = 20;
     public static final int GRAPH_PIE = 200;
     public static final int GRAPH_LINE = 201;
@@ -69,10 +71,13 @@ public class DBTask extends RegisterTask {
     protected Integer doInBackground(Integer... params) {
         switch (order){
             case GET_DATA_FROM_SERVER:
+                Log.d("getdatafromserver","zzz");
                 setGetDataFromServer();
                 return GET_DATA_FROM_SERVER;
             case DRAW_GRAPH:
                 itemList = new ArrayList<>(dbm.selectAll());
+                GetCordFromDB getCord = new GetCordFromDB(itemList);
+
                 return DRAW_GRAPH;
             default:
                 break;
@@ -106,13 +111,14 @@ public class DBTask extends RegisterTask {
     }
 
     private void setGetDataFromServer() {
-        DataBaseManager dbm = new DataBaseManager(mContext);
+         //dbm = new DataBaseManager(mContext);
         JSONObject jsonObject = new JSONObject();
         try {
             //jinu
             jsonObject.put("id", StaticDatas.loginId);
             jsonObject.put("last_time", StaticDatas.lastTime);
-
+            Log.d("id",StaticDatas.loginId);
+            Log.d("last_time",StaticDatas.lastTime);
             //jsonObject.put("token", PropertyManager.getInstance().getPushToken());
         } catch (JSONException e) {
             e.printStackTrace();

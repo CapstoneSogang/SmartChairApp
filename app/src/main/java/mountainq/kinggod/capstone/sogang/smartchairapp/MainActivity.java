@@ -5,25 +5,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.charts.PieChart;
-
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
-import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.BarGraph;
-import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.GetCordFromDB;
 import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.Graph;
-import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.LineGraph;
-import mountainq.kinggod.capstone.sogang.smartchairapp.graphs.PieGraph;
+import mountainq.kinggod.capstone.sogang.smartchairapp.managers.DBTask;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "TestDataBaseActivity";
-    private DbOpenHelper mDbOpenHelper = new DbOpenHelper(this);
+   // private DbOpenHelper mDbOpenHelper = new DbOpenHelper(this);
     private Cursor mCursor;
     private Graph waistGraph, neckGraph, pieGraph, barGraph;
 
     private String date;
+    private DBTask dbTask;
+    public static final int GET_DATA_FROM_SERVER = 10;
+    public static final int DRAW_GRAPH = 20;
     // private InfoClass mInfoClass;
     // private ArrayList<infoclass> mInfoArray;
     // private CustomAdapter mAdapter;
@@ -34,20 +30,31 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("???","zzzz");
-
+       // Log.d("???","zzzz");
       //  setDataBase(mDbOpenHelper);
-        GetCordFromDB getCordFromDB = new GetCordFromDB(mDbOpenHelper);
+        //GetCordFromDB getCordFromDB = new GetCordFromDB(mDbOpenHelper);
         //getCordFromDB.getData();
        // getCordFromDB.getCoordinate();
 
         // mDbOpenHelper = new DbOpenHelper(this);
-        Log.d("insert", "zzz");
+        //Log.d("insert", "zzz");
+        int order=-1;
+        dbTask = new DBTask(this,GET_DATA_FROM_SERVER); //get database from server
+        dbTask.execute();
+//        dbTask = new DBTask(this, DRAW_GRAPH);  //get corrdinate from db
+//        dbTask.execute();
 
+
+/*
         LineChart waistChart = (LineChart) findViewById(R.id.waist_chart);
-        waistGraph = new LineGraph(getCordFromDB,waistChart);
+        waistGraph = new LineGraph(waistChart);
         waistGraph.drawGraph("waist");
 
+        LineChart neckChart = (LineChart) findViewById(R.id.neck_chart);
+        neckGraph = new LineGraph(neckChart);
+        neckGraph.drawGraph("neck");
+        */
+/*
         LineChart neckChart = (LineChart) findViewById(R.id.neck_chart);
         neckGraph = new LineGraph(getCordFromDB,neckChart);
         neckGraph.drawGraph("neck");
@@ -65,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         barGraph = new BarGraph(getCordFromDB, barChartPosture);
         barGraph.drawGraph("posture");
 
-
+*/
 
 
 

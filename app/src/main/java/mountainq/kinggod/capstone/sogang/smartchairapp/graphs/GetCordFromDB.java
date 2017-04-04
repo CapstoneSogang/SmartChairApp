@@ -3,9 +3,11 @@ package mountainq.kinggod.capstone.sogang.smartchairapp.graphs;
 import android.database.Cursor;
 import android.util.Log;
 
-import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DataBases;
+import java.util.ArrayList;
+
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.DbOpenHelper;
 import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetDBFromServer;
+import mountainq.kinggod.capstone.sogang.smartchairapp.datas.PostureData;
 
 /**
  * Created by jwahn37 on 2017. 3. 21..
@@ -13,16 +15,20 @@ import mountainq.kinggod.capstone.sogang.smartchairapp.datas.GetDBFromServer;
 
 public class GetCordFromDB {
 
-    protected final float TIME_SPAN = 5; //1분단위 센서값 가정시
-    protected final float FULL_SPAN = 60; //30분 앉아있으면 가장 멕시멈 / 미니멈된다고 가정
-    protected final int MAX_DATA=1000;
+    protected static final float TIME_SPAN = 5; //1분단위 센서값 가정시
+    protected static final float FULL_SPAN = 60; //30분 앉아있으면 가장 멕시멈 / 미니멈된다고 가정
+    protected static final int MAX_DATA=1000;
 
     public int recendDate;
     public int recentDateIdx = 0; //가장 최근 날짜의 인덱스
-    public String _date[] = new String[ MAX_DATA];     //디비 내용 저장
-    public String _time[] = new String[ MAX_DATA];
-    public String waist[] = new String[ MAX_DATA];
-    public String neck[] = new String[ MAX_DATA];
+    public static String _date[] = new String[ MAX_DATA];     //디비 내용 저장
+    public static String _time[] = new String[ MAX_DATA];
+    public static String waist[] = new String[ MAX_DATA];
+    public static String neck[] = new String[ MAX_DATA];
+    public static String posRight[] = new String[MAX_DATA];
+    public static String posLeft[] = new String[MAX_DATA];
+
+
     public Cursor mCursor;
     DbOpenHelper mDbOpenHelper;
     GetDBFromServer getDBFromServer;
@@ -30,27 +36,54 @@ public class GetCordFromDB {
 
     public float waistHealth[] = new float[MAX_DATA];
     public float neckHealth[] = new float[MAX_DATA];
-   // public String check="0";
 
+    //public DBTask dbTask;
+   // public String check="0";
+    ArrayList<PostureData> itemList;
     public GetCordFromDB(){};
 
-    public GetCordFromDB(DbOpenHelper mDbOpenHelper)
+    public GetCordFromDB(ArrayList<PostureData> itemList /*DbOpenHelper mDbOpenHelper*/)
     {
+       /*
         this.mDbOpenHelper = mDbOpenHelper;
         //getData();
         getDBFromServer =new GetDBFromServer(mDbOpenHelper,this);
       //  Log.d("check", check);
         //getDBFromServer.getData();
-        getCoordinate();
+        */
+       this.itemList = itemList;
+        getCoordinate(itemList);
     }
 
-    public void getCoordinate()
+    public void getCoordinate(ArrayList<PostureData> itemList)
     {
+        //itemList.
+
+        for(int i=0;i<itemList.size();i++) {
+
+            _date[i]= itemList.get(i).get_date();
+            _time[i]= itemList.get(i).get_time();
+            waist[i]= itemList.get(i).getWaist();
+            neck[i] = itemList.get(i).getNeck();
+            posLeft[i] = itemList.get(i).getPosLeft();
+            posRight[i] = itemList.get(i).getPosLeft();
+
+           // mCursor.moveToNext();
+            Log.d(_date[i]+" "+_time[i]+" "+waist[i]+ " " + neck[i], "zzz");
+
+
+        }
+
+
+/*
         mCursor = mDbOpenHelper.readDbHelper();
         // mCursor = mDbOpenHelper.readDbHelper()
         mCursor.moveToFirst();
 
         Log.d(Integer.toString((mCursor.getCount())),"zzzz");
+
+
+
         for(int i=0;i<(numOfData=mCursor.getCount());i++) {
             _date[i]= mCursor.getString(mCursor.getColumnIndexOrThrow(DataBases.CreateDB._DATE));
             _time[i]= mCursor.getString(mCursor.getColumnIndexOrThrow(DataBases.CreateDB._TIME));
@@ -62,6 +95,7 @@ public class GetCordFromDB {
 
 
         }
+        */
         graphAlgorithm();
     }
 
